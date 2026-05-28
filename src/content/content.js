@@ -70,7 +70,7 @@
   // ---- Build Bubble ----
   const bubble = document.createElement('button');
   bubble.className = 'st-bubble';
-  bubble.setAttribute('aria-label', 'Open Subtext analysis panel');
+  bubble.setAttribute('aria-label', 'Open Mind The Gap analysis panel');
   bubble.style.pointerEvents = 'auto';
   bubble.innerHTML = `
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +90,7 @@
   panel.className = 'st-panel';
   panel.style.pointerEvents = 'auto';
   panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-label', 'Subtext analysis panel');
+  panel.setAttribute('aria-label', 'Mind The Gap analysis panel');
   panel.innerHTML = buildPanelHTML();
   shadow.appendChild(panel);
 
@@ -124,7 +124,7 @@
     return `
       <!-- Header -->
       <div class="st-panel__header">
-        <div class="st-panel__logo">Subtext <span>v0.1</span></div>
+        <div class="st-panel__logo">Mind The Gap <span>v0.1</span></div>
         <button class="st-panel__close" aria-label="Close panel">✕</button>
       </div>
 
@@ -689,7 +689,7 @@
     refs.resultsArea.innerHTML = `
       <div class="st-setup-card">
         <div class="st-setup-card__icon">🔮</div>
-        <div class="st-setup-card__title">Welcome to Subtext!</div>
+        <div class="st-setup-card__title">Welcome to Mind The Gap!</div>
         <div class="st-setup-card__desc">
           To get started, you'll need a free Gemini API key from Google AI Studio. It takes 30 seconds and costs nothing.
         </div>

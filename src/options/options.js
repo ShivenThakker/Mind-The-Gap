@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Clear All Data ----
   clearDataBtn.addEventListener('click', () => {
     const confirmed = confirm(
-      'Are you sure you want to clear all Subtext data?\n\n' +
+      'Are you sure you want to clear all Mind The Gap data?\n\n' +
       'This will delete your API key, preferences, and all analysis history. ' +
       'This cannot be undone.'
     );

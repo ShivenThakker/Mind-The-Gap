@@ -1,6 +1,6 @@
-# Subtext Chrome Extension — Progress Tracker
+# Mind The Gap Chrome Extension — Progress Tracker
 
-> **Project**: Subtext — AI That Reads Between the Lines  
+> **Project**: Mind The Gap — AI That Reads Between the Lines  
 > **Type**: Chrome Extension (Manifest V3) with Grammarly-style floating bubble  
 > **AI Backend**: Google Gemini Flash (free tier — 15 RPM, 1M TPM)  
 > **Started**: 2026-05-28  
@@ -50,6 +50,7 @@
 
 - [x] Shifted the entire visual theme of the application (content script injected panel, floating bubble, extension popup, and settings options page) from a purple/violet gradient to a high-contrast neon yellow & orange theme on a deep pitch black background.
 - [x] Optimized all active elements (buttons, active pills, checked radio inputs, and floating bubble icon) to use high-contrast solid black text and icons for perfect legibility and a striking neon visual pop.
+- [x] Renamed the application across all visual headers, logos, setup prompts, confirmation alerts, and browser manifest files from "Subtext" to "Mind The Gap".
 
 ---
 
@@ -108,7 +109,7 @@
 1. Open Chrome and go to `chrome://extensions`
 2. Enable **Developer mode** (toggle in top-right)
 3. Click **Load unpacked** and select the `Mind-The-Gap` folder
-4. The Subtext bubble should appear on supported messaging sites (WhatsApp Web, Telegram Web, Instagram, Messenger, Slack, Discord)
+4. The Mind The Gap bubble should appear on supported messaging sites (WhatsApp Web, Telegram Web, Instagram, Messenger, Slack, Discord)
 5. Click the extension icon in the toolbar → Settings → paste your **free** Gemini API key (optional if a hardcoded API key is configured in the background script)
    - Get one at https://aistudio.google.com/apikey (free, 30 seconds)
 6. Open WhatsApp Web or another supported site → click the bubble → paste a message → click Analyze

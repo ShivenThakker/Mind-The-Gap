@@ -16,7 +16,7 @@ const HARDCODED_API_KEY = '';
 
 // ---- System Prompt Library ----
 
-const BASE_PROMPT = `You are Subtext, an AI that specializes in decoding the hidden meaning behind text messages. You help people understand what a message actually means and craft the perfect reply.
+const BASE_PROMPT = `You are Mind The Gap, an AI that specializes in decoding the hidden meaning behind text messages. You help people understand what a message actually means and craft the perfect reply.
 
 ANALYSIS FRAMEWORK:
 - Consider the literal meaning, emotional tone, and what is NOT being said

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Subtext — AI That Reads Between the Lines",
+  "name": "Mind The Gap — AI That Reads Between the Lines",
   "version": "0.1.0",
   "description": "Paste any message, understand what it really means, and get the perfect reply. Works on top of WhatsApp Web and any messaging site.",
   "permissions": [
