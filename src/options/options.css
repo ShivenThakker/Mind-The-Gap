@@ -11,8 +11,8 @@
 }
 
 body {
-  background: hsl(225, 35%, 8%);
-  color: hsl(220, 20%, 95%);
+  background: hsl(0, 0%, 4%);
+  color: hsl(0, 0%, 95%);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -38,7 +38,7 @@ body {
   font-family: 'Outfit', sans-serif;
   font-size: 32px;
   font-weight: 800;
-  background: linear-gradient(135deg, hsl(262, 83%, 68%), hsl(185, 75%, 55%));
+  background: linear-gradient(135deg, hsl(50, 100%, 50%), hsl(25, 100%, 50%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -52,8 +52,8 @@ body {
 
 /* Cards */
 .options__card {
-  background: hsl(225, 30%, 12%);
-  border: 1px solid hsla(220, 20%, 50%, 0.12);
+  background: hsl(0, 0%, 9%);
+  border: 1px solid hsla(0, 0%, 50%, 0.12);
   border-radius: 16px;
   padding: 24px;
   display: flex;
@@ -63,7 +63,7 @@ body {
 }
 
 .options__card:hover {
-  border-color: hsla(262, 83%, 58%, 0.2);
+  border-color: hsla(50, 100%, 50%, 0.2);
 }
 
 .options__card--danger {
@@ -100,7 +100,7 @@ body {
 }
 
 .options__card-desc a {
-  color: hsl(262, 83%, 68%);
+  color: hsl(50, 100%, 50%);
   text-decoration: none;
 }
 
@@ -122,10 +122,10 @@ body {
 .options__input {
   width: 100%;
   padding: 10px 40px 10px 14px;
-  background: hsl(225, 28%, 16%);
-  border: 1.5px solid hsla(220, 20%, 50%, 0.15);
+  background: hsl(0, 0%, 14%);
+  border: 1.5px solid hsla(0, 0%, 50%, 0.15);
   border-radius: 10px;
-  color: hsl(220, 20%, 95%);
+  color: hsl(0, 0%, 95%);
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 13px;
   outline: none;
@@ -133,13 +133,13 @@ body {
 }
 
 .options__input::placeholder {
-  color: hsl(220, 10%, 40%);
+  color: hsl(0, 0%, 40%);
   font-family: 'Inter', sans-serif;
 }
 
 .options__input:focus {
-  border-color: hsl(262, 83%, 58%);
-  box-shadow: 0 0 0 3px hsla(262, 83%, 58%, 0.2);
+  border-color: hsl(50, 100%, 50%);
+  box-shadow: 0 0 0 3px hsla(50, 100%, 50%, 0.2);
 }
 
 .options__toggle-visibility {
@@ -165,11 +165,11 @@ body {
   padding: 10px 24px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, hsl(262, 83%, 58%), hsl(280, 75%, 50%));
-  color: white;
+  background: linear-gradient(135deg, hsl(50, 100%, 50%), hsl(25, 100%, 50%));
+  color: #000000;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 150ms ease;
   white-space: nowrap;
@@ -178,17 +178,17 @@ body {
 
 .options__save-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px hsla(262, 83%, 58%, 0.3);
+  box-shadow: 0 4px 16px hsla(50, 100%, 50%, 0.3);
 }
 
 .options__save-btn--secondary {
-  background: hsl(225, 28%, 18%);
-  color: hsl(220, 15%, 75%);
+  background: hsl(0, 0%, 14%);
+  color: hsl(0, 0%, 75%);
   align-self: flex-start;
 }
 
 .options__save-btn--secondary:hover {
-  background: hsl(225, 28%, 22%);
+  background: hsl(0, 0%, 18%);
   color: white;
   box-shadow: none;
 }
@@ -261,9 +261,9 @@ body {
 }
 
 .options__radio input:checked + .options__radio-custom {
-  border-color: hsl(262, 83%, 58%);
-  background: hsl(262, 83%, 58%);
-  box-shadow: 0 0 8px hsla(262, 83%, 58%, 0.3);
+  border-color: hsl(50, 100%, 50%);
+  background: hsl(50, 100%, 50%);
+  box-shadow: 0 0 8px hsla(50, 100%, 50%, 0.3);
 }
 
 .options__radio input:checked + .options__radio-custom::after {
@@ -275,11 +275,11 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: white;
+  background: #000000;
 }
 
 .options__radio:has(input:checked) {
-  color: hsl(220, 20%, 95%);
+  color: hsl(0, 0%, 95%);
 }
 
 /* Danger Button */
