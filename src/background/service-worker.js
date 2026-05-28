@@ -399,3 +399,20 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     });
   }
 });
+
+// Enforce 'general' default mode on installation or extension updates/reloads
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.storage.sync.get(['defaultMode', 'defaultHelpLevel', 'responseStyle'], function(settings) {
+    const newSettings = {};
+    if (!settings.defaultMode || settings.defaultMode === 'dating') {
+      newSettings.defaultMode = 'general';
+    }
+    if (!settings.defaultHelpLevel) {
+      newSettings.defaultHelpLevel = 3;
+    }
+    if (!settings.responseStyle) {
+      newSettings.responseStyle = 'balanced';
+    }
+    chrome.storage.sync.set(newSettings);
+  });
+});

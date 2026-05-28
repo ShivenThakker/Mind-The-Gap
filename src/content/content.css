@@ -1148,23 +1148,30 @@
 }
 
 .st-panel__footer-text {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--st-text-tertiary);
 }
 
 .st-panel__footer-link {
-  font-size: 11px;
-  color: var(--st-text-tertiary);
-  text-decoration: none;
-  cursor: pointer;
-  transition: color var(--st-transition-fast);
-  background: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: #000000;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-accent-orange));
   border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
   font-family: var(--st-font-primary);
+  transition: transform var(--st-transition-fast), box-shadow var(--st-transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .st-panel__footer-link:hover {
-  color: var(--st-accent-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsla(50, 100%, 50%, 0.2);
+  color: #000000;
 }
 
 /* ---- Divider ---- */

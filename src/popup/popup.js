@@ -12,11 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---- Load current settings ----
   chrome.storage.sync.get(['defaultMode', 'defaultHelpLevel'], (settings) => {
     // Mode
-    if (settings.defaultMode) {
-      modeButtons.forEach(btn => {
-        btn.classList.toggle('popup__mode-btn--active', btn.dataset.mode === settings.defaultMode);
-      });
-    }
+    const activeMode = settings.defaultMode || 'general';
+    modeButtons.forEach(btn => {
+      btn.classList.toggle('popup__mode-btn--active', btn.dataset.mode === activeMode);
+    });
 
     // Help level
     if (settings.defaultHelpLevel) {

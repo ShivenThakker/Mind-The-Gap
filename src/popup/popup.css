@@ -227,7 +227,9 @@ body {
 
 .popup__btn--secondary {
   background: hsl(0, 0%, 14%);
-  color: hsl(0, 0%, 70%);
+  color: hsl(0, 0%, 85%);
+  font-size: 14px;
+  padding: 11px 16px;
 }
 
 .popup__btn--secondary:hover {
@@ -238,7 +240,7 @@ body {
 /* Footer */
 .popup__footer {
   text-align: center;
-  font-size: 11px;
-  color: hsl(220, 10%, 35%);
-  padding-top: 4px;
+  font-size: 13px;
+  color: hsl(0, 0%, 55%);
+  padding-top: 6px;
 }

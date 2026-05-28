@@ -758,9 +758,11 @@
     safeSendMessage({ type: 'GET_SETTINGS' }, (response) => {
       if (response && response.payload) {
         const s = response.payload;
-        if (s.defaultMode) setMode(s.defaultMode);
+        setMode(s.defaultMode || 'general');
         if (s.defaultHelpLevel) setHelpLevel(parseInt(s.defaultHelpLevel));
         if (s.responseStyle) state.responseStyle = s.responseStyle;
+      } else {
+        setMode('general');
       }
     });
   }
