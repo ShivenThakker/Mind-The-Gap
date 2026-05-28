@@ -3,10 +3,8 @@
    ============================================================
    All styles live inside Shadow DOM — completely isolated from
    the host page. No leakage in either direction.
+   Fonts are loaded via a <link> tag injected into Shadow DOM.
    ============================================================ */
-
-/* ---- Google Fonts Import ---- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ---- Design Tokens ---- */
 :host {

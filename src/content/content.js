@@ -50,6 +50,17 @@
   styleLink.href = chrome.runtime.getURL('src/content/content.css');
   shadow.appendChild(styleLink);
 
+  // ---- Load Google Fonts ----
+  // Fonts must be loaded in the main document for Shadow DOM to render them
+  const fontsUrl = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap';
+  if (!document.querySelector(`link[href*="fonts.googleapis.com"][data-subtext]`)) {
+    const fontLink = document.createElement('link');
+    fontLink.rel = 'stylesheet';
+    fontLink.href = fontsUrl;
+    fontLink.setAttribute('data-subtext', 'true');
+    document.head.appendChild(fontLink);
+  }
+
   // ---- Toast Container ----
   const toastContainer = document.createElement('div');
   toastContainer.className = 'st-toast-container';
