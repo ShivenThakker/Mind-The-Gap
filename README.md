@@ -1,12 +1,12 @@
 <div align="center">
 
 ```
-███████╗██╗   ██╗██████╗ ████████╗███████╗██╗  ██╗████████╗
-██╔════╝██║   ██║██╔══██╗╚══██╔══╝██╔════╝╚██╗██╔╝╚══██╔══╝
-███████╗██║   ██║██████╔╝   ██║   █████╗   ╚███╔╝    ██║   
-╚════██║██║   ██║██╔══██╗   ██║   ██╔══╝   ██╔██╗    ██║   
-███████║╚██████╔╝██████╔╝   ██║   ███████╗██╔╝ ██╗   ██║   
-╚══════╝ ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝   ╚═╝   
+███╗   ███╗██╗███╗   ██╗██████╗     ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ██████╗ 
+████╗ ████║██║████╗  ██║██╔══██╗    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗██╔══██╗
+██╔████╔██║██║██╔██╗ ██║██║  ██║       ██║   ███████║█████╗      ██║  ███╗███████║██████╔╝
+██║╚██╔╝██║██║██║╚██╗██║██║  ██║       ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██╔═══╝ 
+██║ ╚═╝ ██║██║██║ ╚████║██████╔╝       ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║     
+╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝        ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     
 ```
 
 ### *The AI That Reads Between the Lines*
@@ -18,7 +18,7 @@
 
 <br/>
 
-**Subtext is Grammarly for social intelligence.**  
+**Mind The Gap is Grammarly for social intelligence.**  
 An AI that lives in your keyboard. Tells you what a message *actually* means.  
 Then tells you exactly what to say back.
 
@@ -32,13 +32,13 @@ Then tells you exactly what to say back.
 > That's nine words. Is it a soft cancel? A test? The start of being ghosted?  
 > Your brain spins on this for two hours. You draft seventeen replies. You screenshot it to your group chat.  
 > Nobody agrees. You send something safe and characterless.  
-> **Subtext solves this in under 10 seconds — without leaving the conversation.**
+> **Mind The Gap solves this in under 10 seconds — without leaving the conversation.**
 
 ---
 
-## 🧠 What Is Subtext?
+## 🧠 What Is Mind The Gap?
 
-Subtext is a **custom keyboard application** for Android and iOS. It installs exactly like Gboard or SwiftKey — and then becomes available inside every messaging app you already use: WhatsApp, Instagram DMs, iMessage, Snapchat, Telegram.
+Mind The Gap is a **custom keyboard application** for Android and iOS. It installs exactly like Gboard or SwiftKey — and then becomes available inside every messaging app you already use: WhatsApp, Instagram DMs, iMessage, Snapchat, Telegram.
 
 Inside the keyboard is a persistent panel. This panel does two things: it accepts incoming message context, and it delivers AI-generated analysis and reply suggestions. Instantly. Without switching apps. Without screenshots. Without breaking flow.
 
@@ -46,7 +46,7 @@ Inside the keyboard is a persistent panel. This panel does two things: it accept
 ┌──────────────────────────────────────────────────────┐
 │  📨  "Hey, I might not be able to make it Saturday"  │
 │  ─────────────────────────────────────────────────   │
-│  🔍 SUBTEXT ANALYSIS                                 │
+│  🔍 MIND THE GAP ANALYSIS                                 │
 │  Tone: Slightly avoidant. Non-committal phrasing.    │
 │  Likely intent: Testing your reaction / genuinely    │
 │  uncertain. Not a hard no — yet.                     │
@@ -66,7 +66,7 @@ Inside the keyboard is a persistent panel. This panel does two things: it accept
 
 1. Receive a message you're unsure about
 2. Long-press → Copy. **One tap.**
-3. Open your Subtext keyboard. The text populates automatically.
+3. Open your Mind The Gap keyboard. The text populates automatically.
 4. Get instant analysis: what it means, the tone behind it, and 2–3 replies optimised for your goal
 5. Pick one, edit it to your voice, send it
 
@@ -106,7 +106,7 @@ The gap isn't a better ChatGPT wrapper. It's a **purpose-built, zero-friction to
 
 ### 🎚️ Help Level System
 
-Not every user needs the same level of assistance. Subtext adapts.
+Not every user needs the same level of assistance. Mind The Gap adapts.
 
 | Level | Name | What You Get |
 |-------|------|--------------|
@@ -114,7 +114,7 @@ Not every user needs the same level of assistance. Subtext adapts.
 | **2** | Analysis + One Suggestion | Interpretation and one recommended reply with explanation of *why*. |
 | **3** | Analysis + Three Options | Full analysis plus three replies calibrated to different goals or tones. |
 | **4** | Full Coaching | Analysis, suggestions, plus a coaching note on patterns in how you're coming across. |
-| **5** | Ghost-Write Mode | Subtext writes the full reply. You review, edit to your voice, and send. Maximum assistance for maximum anxiety moments. |
+| **5** | Ghost-Write Mode | Mind The Gap writes the full reply. You review, edit to your voice, and send. Maximum assistance for maximum anxiety moments. |
 
 > Users can set different default levels per contact. Run at Level 2 for most chats, flip to Level 5 when it really matters.
 
@@ -139,7 +139,7 @@ The AI's tone, framing, and suggestions adapt based on context.
 
 > *The best relationship people already do this instinctively — they remember that their friend hates surprises, that their romantic interest lights up around obscure cinema, that their manager's mood shifts on Monday mornings. Most people can't do this at scale. Second Brain does it for them.*
 
-For any contact you designate, Subtext builds a structured personal profile — stored **entirely on your device**:
+For any contact you designate, Mind The Gap builds a structured personal profile — stored **entirely on your device**:
 
 - 📊 **Response pattern analysis** — average reply time by day/time, message length distribution, punctuation habits
 - 🎯 **Interests and energy mapping** — topics they write most about, what lights them up vs. what they disengage from
@@ -154,9 +154,9 @@ This profile is never uploaded. It never touches the company's servers. It compo
 
 ## ⚡ Why Not Just Use ChatGPT?
 
-Fair question. For a completely cold query, ChatGPT is a decent substitute. But Subtext beats it in three specific ways that compound over time:
+Fair question. For a completely cold query, ChatGPT is a decent substitute. But Mind The Gap beats it in three specific ways that compound over time:
 
-| | ChatGPT | Rizz App / Wingman | **Subtext** |
+| | ChatGPT | Rizz App / Wingman | **Mind The Gap** |
 |---|---|---|---|
 | **Interaction model** | App switch + paste | Screenshot upload | Native keyboard, zero switch |
 | **Context memory** | None — every query is cold | None | Full conversation thread in panel |
@@ -165,7 +165,7 @@ Fair question. For a completely cold query, ChatGPT is a decent substitute. But 
 | **Modes** | None | Dating only | 6 modes across all relationship types |
 | **Privacy** | Sends to OpenAI servers | Sends screenshots | Processed ephemerally, profiles stay local |
 
-> **The Zomato Principle** — When Zomato launched, food delivery already existed. What Zomato built was a friction-elimination system that made an existing behaviour so easy that vastly more people did it. Subtext operates on the same principle. AI texting advice already exists. The moat is eliminating the friction between the moment of anxiety and the moment of relief.
+> **The Zomato Principle** — When Zomato launched, food delivery already existed. What Zomato built was a friction-elimination system that made an existing behaviour so easy that vastly more people did it. Mind The Gap operates on the same principle. AI texting advice already exists. The moat is eliminating the friction between the moment of anxiety and the moment of relief.
 
 ---
 
@@ -270,7 +270,7 @@ Company Servers — receive:
 
 Calibrated to India at launch — low enough that a motivated 19-year-old pays without asking anyone.
 
-| | **Free** | **Subtext Plus** | **Subtext Pro** |
+| | **Free** | **Mind The Gap Plus** | **Mind The Gap Pro** |
 |---|:---:|:---:|:---:|
 | Price | ₹0 | **₹199/mo** (~$2.40) | **₹399/mo** (~$4.80) |
 | Daily analyses | 5 | Unlimited | Unlimited |
@@ -312,7 +312,7 @@ Calibrated to India at launch — low enough that a motivated 19-year-old pays w
 
 ## 🛡️ Privacy by Architecture
 
-Privacy isn't a policy at Subtext. It's a technical fact.
+Privacy isn't a policy at Mind The Gap. It's a technical fact.
 
 ```
 What leaves the device during analysis:
@@ -326,7 +326,7 @@ What NEVER leaves the device:
   ❌ Behavioural pattern data
 ```
 
-> The most common privacy enforcement action against consumer apps comes from a journalist running a network inspection tool — and discovering that an app claiming to be private is sending personal data to servers. Subtext's architecture makes that story impossible to write. The data genuinely does not leave the device. That is not a legal disclaimer. It is a technical fact.
+> The most common privacy enforcement action against consumer apps comes from a journalist running a network inspection tool — and discovering that an app claiming to be private is sending personal data to servers. Mind The Gap's architecture makes that story impossible to write. The data genuinely does not leave the device. That is not a legal disclaimer. It is a technical fact.
 
 ---
 
@@ -342,23 +342,6 @@ Ship date target: 8 weeks
 
 ---
 
-## ⚠️ Honest Assessment
-
-**What must go right:**
-1. The keyboard interaction must feel **fast and natural** — if it adds friction, the product fails its core premise
-2. The **first analysis must be genuinely good** — one mediocre suggestion and they're gone forever
-3. The product must **not make anxious users more anxious** — deliberate friction for obsessive usage patterns built in
-4. The team must **ship Phase 1 fast** — the keyboard architecture advantage is a window, not a permanent wall
-
-**Risks worth knowing:**
-| Risk | Mitigation |
-|------|-----------|
-| Apple/Google removes the app | Strict App Store compliance from day one; no grey-area permissions |
-| Rizz App ships a keyboard integration | Speed. Ship before they do. Local profiles compound the moat. |
-| Users don't form the paste-and-analyse habit | First-session success moment within 2 minutes. If the first analysis is good, the habit forms. |
-| The app amplifies anxiety rather than reducing it | Rate-limit obsessive analysis. If a user has queried the same message 6× in an hour, surface this gently. |
-
----
 
 <div align="center">
 
@@ -366,7 +349,7 @@ Ship date target: 8 weeks
 
 **The bottom line:**
 
-*Subtext is a buildable, defensible, market-validated idea with a specific technical insight at its core that competitors have not executed. The problem is real. The pain is acute. The user is motivated. The existing market demonstrates willingness to pay. The keyboard integration solves the primary UX friction that competitors have failed to eliminate.*
+*Mind The Gap is a buildable, defensible, market-validated idea with a specific technical insight at its core that competitors have not executed. The problem is real. The pain is acute. The user is motivated. The existing market demonstrates willingness to pay. The keyboard integration solves the primary UX friction that competitors have failed to eliminate.*
 
 **Stop planning. Start shipping the prototype.**
 
@@ -374,9 +357,4 @@ Ship date target: 8 weeks
 
 *v1.0 — Confidential — 2025*
 
-## 💛 Built for overthinkers.
-
 </div>
-
-
-
