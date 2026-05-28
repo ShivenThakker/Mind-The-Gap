@@ -2,7 +2,7 @@ import requests
 import json
 
 GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent'
-API_KEY = ''
+API_KEY = ''  # Paste your Gemini API key here
 
 system_prompt = """You are Mind The Gap, an AI that specializes in decoding the hidden meaning behind text messages. You help people understand what a message actually means and craft the perfect reply.
 

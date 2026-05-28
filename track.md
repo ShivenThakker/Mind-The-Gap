@@ -90,6 +90,7 @@
 - [x] Injected a consistent 16px flex gap across the slide-out tab containers (`.st-tab-content`), giving beautiful and readable vertical spacing between context box, message input, action buttons, and divider elements.
 - [x] Wrapped the Mode and Help Level selectors in input groups (`.st-input-group`) to ensure unified and flawless control margins.
 - [x] Upgraded analysis error handling (`handleAnalysisError`) to differentiate between a missing API key and an invalid/leaked key. When the key is set but invalid (re-occurring leaked key failure), it now displays a polished warning card with an "Open Settings" shortcut rather than first-time welcome setup prompts.
+- [x] Removed the leaked/deactivated free-tier API key from `test_gemini.py` to eliminate security warnings.
 
 ---
 
@@ -158,6 +159,7 @@
 19. `3a6f3b3` — feat: add multi-mode Opening Line Generator with dynamic risk levels
 20. `572daef` — docs: update track.md with session 7 progress
 21. `70dfcbf` — fix: correct spacing overlaps and polish invalid api key error handling
+22. `42f772d` — chore: remove leaked API key from test_gemini.py
 
 ---
 
