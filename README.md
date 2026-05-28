@@ -1,4 +1,4 @@
-# Subtext 🔮
+# Mind The Gap 🔮
 
 > **The AI That Reads Between the Lines** — A premium Chrome Extension (Manifest V3) that provides real-time social intelligence, tone decoding, and context-aware reply suggestions directly inside your favorite messaging platforms.
 
@@ -8,16 +8,16 @@
 
 Have you ever spent hours overthinking a nine-word text message, drafting seventeen different responses, or screenshotting a conversation to ask your friends what it means? 
 
-**Subtext** is social intelligence in the browser. Floating as a sleek, Grammarly-style interactive bubble, it slides open into a glassmorphic analysis panel where you can paste incoming texts and get instant, psychology-backed breakdowns of tone, hidden motivations, and highly calibrated response suggestions — all without leaving your chat window.
+**Mind The Gap** is social intelligence in the browser. Floating as a sleek, interactive neon bubble, it slides open into a premium glassmorphic analysis panel where you can paste incoming texts and get instant, psychology-backed breakdowns of tone, hidden motivations, and highly calibrated response suggestions — all without leaving your chat window.
 
 ---
 
 ## ✨ Features
 
-- **Floating bubble entry point**: Minimalist, pulsing violet bubble fixed to the screen corner on messaging sites.
-- **Glassmorphism Slide-out Panel**: Premium visual aesthetic built with vanilla CSS tokens, backdrop filters, and custom scrollbars.
+- **Floating bubble entry point**: Minimalist, pulsing neon yellow-to-orange bubble fixed to the screen corner on messaging sites (disappears smoothly when the panel is active).
+- **Glassmorphism Slide-out Panel**: Premium visual aesthetic in a striking high-contrast neon yellow & orange theme on pitch black, built with vanilla CSS tokens, backdrop filters, and custom scrollbars.
 - **Three Strategic Modes**:
-  - 💬 **General**: Authentic, balanced social communications.
+  - 💬 **General**: Authentic, balanced social communications (default).
   - ❤️ **Dating**: Pacing cues, interest level signaling, and de-escalation of mixed signals.
   - 💼 **Interview**: Professional poise, recruiter-friendly follow-ups, and candidate positioning.
 - **Segmented Help Levels**:
@@ -32,10 +32,11 @@ Have you ever spent hours overthinking a nine-word text message, drafting sevent
 
 ## 🛠️ Architecture
 
-Subtext is built with absolute performance, reliability, and security in mind:
+**Mind The Gap** is built with absolute performance, reliability, and security in mind:
 - **Shadow DOM Isolation**: All injected elements (the bubble, overlay, panel, and notifications) are contained inside an isolated Shadow DOM root. The extension's styles **cannot leak** to the host page, and the host page's CSS **cannot break** the extension.
 - **Secure Service Worker Proxy**: The Gemini API calls are made in the isolated background script. The API Key is never exposed to the host page's DOM or context script.
 - **Multi-source API Key Fallback**: Supports both user-saved settings (`chrome.storage.sync`) and a hardcoded demo fallback key (`const HARDCODED_API_KEY`) defined in the service worker.
+- **Graceful Context Invalidation Recovery**: Custom recovery loops inside the content script seamlessly capture extension reloads/updates, preventing synchronous exceptions and showing a user-friendly page reload prompt instead.
 
 ---
 
@@ -59,7 +60,7 @@ The content script is optimized to run strictly on the following platforms to pr
 3. Toggle **Developer mode** in the top-right corner to **ON**.
 4. Click **Load unpacked** in the top-left corner.
 5. Select the project repository directory: `Mind-The-Gap`.
-6. Pin **Subtext** from the extension toolbar menu.
+6. Pin **Mind The Gap** from the extension toolbar menu.
 
 ### 2. Configure Your Gemini API Key
 To utilize the AI capabilities, you'll need a free Gemini API key:
@@ -68,7 +69,7 @@ To utilize the AI capabilities, you'll need a free Gemini API key:
   2. Define your key at the top: `const HARDCODED_API_KEY = 'AIzaSy...';`.
   3. Save the file and reload the extension in Chrome. The settings page and toolbar popup will automatically display a green *"✓ Using hardcoded API key for demo"* status banner.
 - **Option B (Options UI Page)**:
-  1. Click the Subtext toolbar icon and click **Settings**.
+  1. Click the **Mind The Gap** toolbar icon and click **Settings**.
   2. Paste your key in the input field and click **Save API Key**.
 
 ---
@@ -76,10 +77,11 @@ To utilize the AI capabilities, you'll need a free Gemini API key:
 ## 🧑‍💻 Technical Specifications
 
 - **Tech Stack**: Vanilla HTML5, Vanilla ES6+ JavaScript, Vanilla CSS3 (Custom Properties).
-- **Backend API**: Google Gemini Flash (`gemini-2.0-flash`) via structured JSON response formatting.
+- **Backend API**: Google Gemini Flash-Lite (`gemini-flash-lite-latest`) yielding an ultra-fast **3x to 4x latency speedup** (~2.0s typical response times).
 - **Design Tokens**: Fully scoped custom properties on `:host` container inside the shadow DOM.
 - **Fonts**: Loaded via injected `<link>` tags in the parent document for flawless Shadow DOM rendering (`Inter`, `Outfit`, and `JetBrains Mono`).
 
 ---
 
-## 💜 Built for overthinkers.
+## 💛 Built for overthinkers.
+
