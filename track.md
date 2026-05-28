@@ -62,12 +62,26 @@
 - [x] Tightened the core system prompt with a strict **Conciseness Mandate**, limiting interpretations, notices, tone explanations, and rationales to a single, direct, short sentence (reducing output generation token count significantly and increasing generation speed).
 - [x] Robustly updated the service worker's REST response handler to merge multi-part candidates, preventing JSON parsing errors in case the API splits the response text stream.
 
+### Session 5 — 2026-05-29 (UX Polish & Defaults)
+
+- [x] Fixed default mode — extension now always defaults to **General** mode on first install or reload, enforced via `onInstalled` listener in the background service worker and fallback in `loadSettings()` in content.js and popup.js.
+- [x] Enlarged the **Settings button** in the popup — increased font size (`14px`), padding, and brightness for better tap target and readability.
+- [x] Increased font size of **"Built for overthinkers"** footer text in both the popup and the slide-out panel footer.
+- [x] Upgraded the panel footer **⚙️ Settings** button from a plain text link to a styled frosted-glass pill button with white text.
+- [x] Fixed Settings button text color to **white** in both popup (`!important` + `-webkit-text-fill-color`) and the slide-out panel footer.
+- [x] **Bubble now hides when the panel is open** — added `st-bubble--hidden` class toggle in `openPanel()` / `closePanel()` so the floating button disappears while the panel is in use and reappears cleanly when it closes.
+
+### Session 6 — 2026-05-29 (New App Logo)
+
+- [x] Generated a fresh premium app logo — neon yellow-to-orange 3D glossy speech bubble with white rounded text lines, golden neon rim glow, pitch black background.
+- [x] Scaled and replaced all extension icon assets: `icon-16.png`, `icon-48.png`, `icon-128.png`, and `logo.png` in `src/assets/`.
+
 ---
 
 ## What Needs To Be Done Next
 
-- [ ] **Test on WhatsApp Web** — load extension, verify bubble appears, panel works
-- [ ] Test full analysis flow with a real Gemini API key
+- [x] **Test on WhatsApp Web** — extension is confirmed working with real API key
+- [x] Test full analysis flow with a real Gemini API key
 - [ ] Test mode switching affects AI output
 - [ ] Test help level changes (Level 1 = no replies, Level 2 = 1, Level 3 = 3)
 - [ ] Test copy-to-clipboard works on WhatsApp Web
@@ -100,7 +114,7 @@
 
 | Service | What For | Cost |
 |---|---|---|
-| Google Gemini Flash (AI Studio) | AI analysis & reply generation | Free (15 RPM) |
+| Google Gemini Flash-Lite (AI Studio) | AI analysis & reply generation | Free (15 RPM) |
 | Chrome Extension APIs | Storage, clipboard, messaging | Free |
 | Google Fonts (CDN) | Inter, Outfit, JetBrains Mono | Free |
 
@@ -108,11 +122,36 @@
 
 ## Commits Log
 
-1. `55c851d` — feat: initial Chrome Extension scaffold (18 files, 4325 insertions)
+1. `55c851d` — feat: initial Chrome Extension scaffold
 2. `e96b574` — fix: font loading in Shadow DOM
-3. `a9b2c3d` — feat: restrain injection scope, support hardcoded API key demo fallback, and add UI status badges
+3. `8ab5d5e` — feat: restrict scope to messaging sites & add hardcoded API key fallback support
+4. `5216604` — docs: add comprehensive README.md and update progress tracker
+5. `60d256a` — fix: use correct Gemini 1.5 Flash model identifier and improve error propagation
+6. `4de19c5` — style: shift to premium neon yellow & orange on pitch black
+7. `8dea6af` — fix: append cache-buster to content.css URL
+8. `27a8e40` — feat: rename application to Mind The Gap
+9. `42de6e0` — style: integrate new neon yellow & orange speech bubble logo
+10. `3e07bf0` — fix: handle extension context invalidation gracefully on reload
+11. `a283bcc` — fix: harden context invalidation check via try-catch getManifest
+12. `2992784` — perf: switch to Gemini Flash-Lite & optimize prompt for 3x speedup
+13. `0a93150` — fix: default to General mode; enlarge Settings button and footer text
+14. `fc89f14` — fix: force white text on Settings button in popup
+15. `2ab457b` — style: update app logo and extension icons
+16. `13c790d` — chore: add Gemini API diagnostic test script
+17. `4780856` — fix: hide bubble when panel open; white text on Settings button
 
 ---
+
+## How to Install & Test
+
+1. Open Chrome and go to `chrome://extensions`
+2. Enable **Developer mode** (toggle in top-right)
+3. Click **Load unpacked** and select the `Mind-The-Gap` folder
+4. The Mind The Gap bubble should appear on supported messaging sites (WhatsApp Web, Telegram Web, Instagram, Messenger, Slack, Discord)
+5. Click the extension icon in the toolbar → Settings → paste your **free** Gemini API key (optional if a hardcoded API key is configured in the background script)
+   - Get one at https://aistudio.google.com/apikey (free, 30 seconds)
+6. Open WhatsApp Web or another supported site → click the bubble → paste a message → click Analyze
+
 
 ## How to Install & Test
 
