@@ -298,6 +298,7 @@
     panel.classList.add('st-panel--open');
     overlay.classList.add('st-overlay--visible');
     bubble.classList.add('st-bubble--open');
+    bubble.classList.add('st-bubble--hidden');
     // Focus textarea
     setTimeout(() => refs.textarea.focus(), 350);
   }
@@ -307,6 +308,7 @@
     panel.classList.remove('st-panel--open');
     overlay.classList.remove('st-overlay--visible');
     bubble.classList.remove('st-bubble--open');
+    bubble.classList.remove('st-bubble--hidden');
   }
 
   // ---- Mode ----
