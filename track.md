@@ -91,6 +91,7 @@
 - [x] Wrapped the Mode and Help Level selectors in input groups (`.st-input-group`) to ensure unified and flawless control margins.
 - [x] Upgraded analysis error handling (`handleAnalysisError`) to differentiate between a missing API key and an invalid/leaked key. When the key is set but invalid (re-occurring leaked key failure), it now displays a polished warning card with an "Open Settings" shortcut rather than first-time welcome setup prompts.
 - [x] Removed the leaked/deactivated free-tier API key from `test_gemini.py` to eliminate security warnings.
+- [x] Rewrote Git history using `git filter-branch` to completely purge the leaked API key from all historical commits, keeping past commits completely clean of credentials.
 
 ---
 
