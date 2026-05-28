@@ -17,3 +17,9 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Documentation / Session Logs
+track.md
+subtext.md
+SUBTEXT.md
+
