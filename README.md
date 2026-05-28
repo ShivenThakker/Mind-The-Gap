@@ -1,87 +1,359 @@
-# Mind The Gap 🔮
+<div align="center">
 
-> **The AI That Reads Between the Lines** — A premium Chrome Extension (Manifest V3) that provides real-time social intelligence, tone decoding, and context-aware reply suggestions directly inside your favorite messaging platforms.
+```
+███╗   ███╗██╗███╗   ██╗██████╗     ████████╗██╗  ██╗███████╗     ██████╗  █████╗ ██████╗ 
+████╗ ████║██║████╗  ██║██╔══██╗    ╚══██╔══╝██║  ██║██╔════╝    ██╔════╝ ██╔══██╗██╔══██╗
+██╔████╔██║██║██╔██╗ ██║██║  ██║       ██║   ███████║█████╗      ██║  ███╗███████║██████╔╝
+██║╚██╔╝██║██║██║╚██╗██║██║  ██║       ██║   ██╔══██║██╔══╝      ██║   ██║██╔══██║██╔═══╝ 
+██║ ╚═╝ ██║██║██║ ╚████║██████╔╝       ██║   ██║  ██║███████╗    ╚██████╔╝██║  ██║██║     
+╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═════╝        ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝  ╚═╝╚═╝     
+```
 
----
+### *The AI That Reads Between the Lines*
 
-## 🚀 The Concept
+[![Status](https://img.shields.io/badge/STATUS-IN%20DEVELOPMENT-6C63FF?style=for-the-badge&labelColor=0D0D0D)](https://github.com)
+[![Platform](https://img.shields.io/badge/PLATFORM-ANDROID%20%7C%20iOS-1A1A2E?style=for-the-badge&labelColor=0D0D0D)](https://github.com)
+[![Target](https://img.shields.io/badge/MARKET-INDIA%20FIRST-FF6B6B?style=for-the-badge&labelColor=0D0D0D)](https://github.com)
+[![Model](https://img.shields.io/badge/AI-GEMINI%20FLASH-4ECDC4?style=for-the-badge&labelColor=0D0D0D)](https://github.com)
 
-Have you ever spent hours overthinking a nine-word text message, drafting seventeen different responses, or screenshotting a conversation to ask your friends what it means? 
+<br/>
 
-**Mind The Gap** is social intelligence in the browser. Floating as a sleek, interactive neon bubble, it slides open into a premium glassmorphic analysis panel where you can paste incoming texts and get instant, psychology-backed breakdowns of tone, hidden motivations, and highly calibrated response suggestions — all without leaving your chat window.
+**Mind The Gap is Grammarly for social intelligence.**  
+An AI that lives in your keyboard. Tells you what a message *actually* means.  
+Then tells you exactly what to say back.
 
----
+<br/>
 
-## ✨ Features
-
-- **Floating bubble entry point**: Minimalist, pulsing neon yellow-to-orange bubble fixed to the screen corner on messaging sites (disappears smoothly when the panel is active).
-- **Glassmorphism Slide-out Panel**: Premium visual aesthetic in a striking high-contrast neon yellow & orange theme on pitch black, built with vanilla CSS tokens, backdrop filters, and custom scrollbars.
-- **Three Strategic Modes**:
-  - 💬 **General**: Authentic, balanced social communications (default).
-  - ❤️ **Dating**: Pacing cues, interest level signaling, and de-escalation of mixed signals.
-  - 💼 **Interview**: Professional poise, recruiter-friendly follow-ups, and candidate positioning.
-- **Segmented Help Levels**:
-  - **Level 1**: Tone & Interpretation analysis only (no replies).
-  - **Level 2**: Full analysis + exactly 1 context-optimized reply.
-  - **Level 3**: Full analysis + 3 diverse strategic response suggestions.
-- **Interaction Cards**: Suggested replies feature intent badges (e.g. *"Show interest"*, *"Set boundary"*), copy-to-clipboard buttons, and a **"Use & Edit"** action that loads the suggestion back into the workspace.
-- **Tone Heatmap**: A stylized visual bar showing exact warmth levels (0 to 100) from ❄️ Cold to 🔥 Warm.
-- **Conversation Threading**: Remembers context across multiple inputs within a page session, enabling progressive conversation coaching.
+</div>
 
 ---
 
-## 🛠️ Architecture
-
-**Mind The Gap** is built with absolute performance, reliability, and security in mind:
-- **Shadow DOM Isolation**: All injected elements (the bubble, overlay, panel, and notifications) are contained inside an isolated Shadow DOM root. The extension's styles **cannot leak** to the host page, and the host page's CSS **cannot break** the extension.
-- **Secure Service Worker Proxy**: The Gemini API calls are made in the isolated background script. The API Key is never exposed to the host page's DOM or context script.
-- **Multi-source API Key Fallback**: Supports both user-saved settings (`chrome.storage.sync`) and a hardcoded demo fallback key (`const HARDCODED_API_KEY`) defined in the service worker.
-- **Graceful Context Invalidation Recovery**: Custom recovery loops inside the content script seamlessly capture extension reloads/updates, preventing synchronous exceptions and showing a user-friendly page reload prompt instead.
+> **The Nine-Word Problem** — You receive: *"Hey, I might not be able to make it Saturday."*  
+> That's nine words. Is it a soft cancel? A test? The start of being ghosted?  
+> Your brain spins on this for two hours. You draft seventeen replies. You screenshot it to your group chat.  
+> Nobody agrees. You send something safe and characterless.  
+> **Mind The Gap solves this in under 10 seconds — without leaving the conversation.**
 
 ---
 
-## 📦 Supported Messaging Sites
+## 🧠 What Is Mind The Gap?
 
-The content script is optimized to run strictly on the following platforms to protect user privacy and extension efficiency:
-- **WhatsApp Web** (`web.whatsapp.com`)
-- **Instagram Direct** (`instagram.com`)
-- **Telegram Web** (`web.telegram.org`)
-- **Messenger** (`messenger.com`)
-- **Slack Web** (`slack.com`)
-- **Discord Web** (`discord.com`)
+Mind The Gap is a **custom keyboard application** for Android and iOS. It installs exactly like Gboard or SwiftKey — and then becomes available inside every messaging app you already use: WhatsApp, Instagram DMs, iMessage, Snapchat, Telegram.
 
----
+Inside the keyboard is a persistent panel. This panel does two things: it accepts incoming message context, and it delivers AI-generated analysis and reply suggestions. Instantly. Without switching apps. Without screenshots. Without breaking flow.
 
-## 🛠️ Installation & Setup
+```
+┌──────────────────────────────────────────────────────┐
+│  📨  "Hey, I might not be able to make it Saturday"  │
+│  ─────────────────────────────────────────────────   │
+│  🔍 MIND THE GAP ANALYSIS                                 │
+│  Tone: Slightly avoidant. Non-committal phrasing.    │
+│  Likely intent: Testing your reaction / genuinely    │
+│  uncertain. Not a hard no — yet.                     │
+│                                                      │
+│  💬 SUGGESTED REPLIES                                │
+│  [Keep It Warm]  "No worries! Let me know either    │
+│                   way, happy to be flexible 😊"      │
+│  [Create Urgency] "Ah that's a shame — I had        │
+│                    something fun planned. Try to     │
+│                    make it if you can?"              │
+│  [Stay Neutral]  "Okay, let me know what works."   │
+└──────────────────────────────────────────────────────┘
+         ↑ This lives in your keyboard. Always.
+```
 
-### 1. Load the Extension in Chrome
-1. Open Google Chrome.
-2. Navigate to `chrome://extensions` in the address bar.
-3. Toggle **Developer mode** in the top-right corner to **ON**.
-4. Click **Load unpacked** in the top-left corner.
-5. Select the project repository directory: `Mind-The-Gap`.
-6. Pin **Mind The Gap** from the extension toolbar menu.
+**The user flow:**
 
-### 2. Configure Your Gemini API Key
-To utilize the AI capabilities, you'll need a free Gemini API key:
-- **Option A (Hardcoded for Demo)**:
-  1. Open `src/background/service-worker.js`.
-  2. Define your key at the top: `const HARDCODED_API_KEY = 'AIzaSy...';`.
-  3. Save the file and reload the extension in Chrome. The settings page and toolbar popup will automatically display a green *"✓ Using hardcoded API key for demo"* status banner.
-- **Option B (Options UI Page)**:
-  1. Click the **Mind The Gap** toolbar icon and click **Settings**.
-  2. Paste your key in the input field and click **Save API Key**.
+1. Receive a message you're unsure about
+2. Long-press → Copy. **One tap.**
+3. Open your Mind The Gap keyboard. The text populates automatically.
+4. Get instant analysis: what it means, the tone behind it, and 2–3 replies optimised for your goal
+5. Pick one, edit it to your voice, send it
 
----
-
-## 🧑‍💻 Technical Specifications
-
-- **Tech Stack**: Vanilla HTML5, Vanilla ES6+ JavaScript, Vanilla CSS3 (Custom Properties).
-- **Backend API**: Google Gemini Flash-Lite (`gemini-flash-lite-latest`) yielding an ultra-fast **3x to 4x latency speedup** (~2.0s typical response times).
-- **Design Tokens**: Fully scoped custom properties on `:host` container inside the shadow DOM.
-- **Fonts**: Loaded via injected `<link>` tags in the parent document for flawless Shadow DOM rendering (`Inter`, `Outfit`, and `JetBrains Mono`).
+No screenshots. No app switching. No copy-pasting into a browser. **The AI is already there.**
 
 ---
 
-## 💛 Built for overthinkers.
+## 😰 The Problem We're Solving
 
+Gen Z is the loneliest, most digitally-fluent generation in recorded history. They have hundreds of followers. They freeze when someone they like sends them a text.
+
+| Stat | Source |
+|------|--------|
+| **31%** of young adults have experienced an anxiety disorder | American Psychological Association |
+| **61%** of young adults report feeling lonely frequently | Harvard Making Caring Common Project |
+| **22%** of people worldwide often or always feel lonely | Gallup, 2023 |
+| US Surgeon General declared loneliness a **public health crisis** comparable to smoking | US Surgeon General Advisory, 2023 |
+
+This isn't about feelings. It's clinical, economic, and behavioral data describing a generation that grew up online and paradoxically **finds text-based communication one of the most anxiety-inducing parts of daily life.**
+
+### The Existing Workarounds Are All Broken
+
+| Workaround | What It Does Well | Where It Fails |
+|---|---|---|
+| 📸 Screenshot to group chat | Free, socially normal | Slow, opinions conflict, not private |
+| 🤖 Paste into ChatGPT | Fast, surprisingly useful | 5+ steps, breaks flow, zero context memory |
+| 👫 Ask a trusted friend | Personalised, supportive | Requires availability, creates social debt |
+| 📱 Rizz App / Keys AI | Purpose-built | Screenshot workflow, no contextual memory |
+| ✉️ Just send something | No friction | High anxiety, often regretted |
+| 👻 Ghost / do nothing | No immediate anxiety | Kills the connection entirely |
+
+The gap isn't a better ChatGPT wrapper. It's a **purpose-built, zero-friction tool** with contextual awareness — one that lives exactly where the conversation is happening.
+
+---
+
+## ✨ Core Features
+
+### 🎚️ Help Level System
+
+Not every user needs the same level of assistance. Mind The Gap adapts.
+
+| Level | Name | What You Get |
+|-------|------|--------------|
+| **1** | Analysis Only | What the incoming message likely means. No reply suggestions. Just clarity. |
+| **2** | Analysis + One Suggestion | Interpretation and one recommended reply with explanation of *why*. |
+| **3** | Analysis + Three Options | Full analysis plus three replies calibrated to different goals or tones. |
+| **4** | Full Coaching | Analysis, suggestions, plus a coaching note on patterns in how you're coming across. |
+| **5** | Ghost-Write Mode | Mind The Gap writes the full reply. You review, edit to your voice, and send. Maximum assistance for maximum anxiety moments. |
+
+> Users can set different default levels per contact. Run at Level 2 for most chats, flip to Level 5 when it really matters.
+
+---
+
+### 🎭 Conversation Modes
+
+The AI's tone, framing, and suggestions adapt based on context.
+
+| Mode | Built For |
+|------|-----------|
+| 💕 **Dating Mode** | Warmth, attraction, pacing, avoiding over-eagerness or seeming disinterested |
+| 🤝 **Friendship Mode** | Reading whether a friend is genuinely busy or pulling away |
+| 💼 **Interview Mode** | Recruiter messages, follow-ups, thank-you notes — calibrated for strategic professionalism |
+| 🌐 **Networking Mode** | Cold outreach, LinkedIn replies, post-event follow-ups without desperation |
+| ⚡ **Conflict Mode** | De-escalation for conversations going sideways — no capitulating, no escalating |
+| 💬 **General Mode** | Everyday sense-checking on tone and meaning |
+
+---
+
+### 🧠 Second Brain *(Paid Feature)*
+
+> *The best relationship people already do this instinctively — they remember that their friend hates surprises, that their romantic interest lights up around obscure cinema, that their manager's mood shifts on Monday mornings. Most people can't do this at scale. Second Brain does it for them.*
+
+For any contact you designate, Mind The Gap builds a structured personal profile — stored **entirely on your device**:
+
+- 📊 **Response pattern analysis** — average reply time by day/time, message length distribution, punctuation habits
+- 🎯 **Interests and energy mapping** — topics they write most about, what lights them up vs. what they disengage from
+- 🗣️ **Communication style profile** — direct vs. indirect, formal vs. casual, emoji frequency
+- 📅 **Important dates** — birthdays, key events, follow-up reminders surfaced proactively
+- 🚨 **Anomaly detection** — "This reply is shorter than usual for them. That shift is worth noting."
+- 📥 **History import** — import Instagram JSON or WhatsApp chat exports, processed entirely on-device
+
+This profile is never uploaded. It never touches the company's servers. It compounds in value the longer you use the app.
+
+---
+
+## ⚡ Why Not Just Use ChatGPT?
+
+Fair question. For a completely cold query, ChatGPT is a decent substitute. But Mind The Gap beats it in three specific ways that compound over time:
+
+| | ChatGPT | Rizz App / Wingman | **Mind The Gap** |
+|---|---|---|---|
+| **Interaction model** | App switch + paste | Screenshot upload | Native keyboard, zero switch |
+| **Context memory** | None — every query is cold | None | Full conversation thread in panel |
+| **Contact profiles** | None | None | Local profiles built over time |
+| **Goal-oriented replies** | Generic | Generic | Optimised for your specific stated goal |
+| **Modes** | None | Dating only | 6 modes across all relationship types |
+| **Privacy** | Sends to OpenAI servers | Sends screenshots | Processed ephemerally, profiles stay local |
+
+> **The Zomato Principle** — When Zomato launched, food delivery already existed. What Zomato built was a friction-elimination system that made an existing behaviour so easy that vastly more people did it. Mind The Gap operates on the same principle. AI texting advice already exists. The moat is eliminating the friction between the moment of anxiety and the moment of relief.
+
+---
+
+## 🏗️ Architecture
+
+### AI Inference Stack
+
+```
+PROTOTYPE PHASE
+───────────────
+Primary:     Google Gemini Flash  (fast, cheap, strong on conversational tasks)
+Alternative: Anthropic Claude Haiku  (nuanced language, cost-effective)
+Alternative: OpenAI GPT-4o Mini  (widely tested, competitive pricing)
+
+PRODUCTION PHASE (Hybrid)
+──────────────────────────
+On-Device:   Gemma 3 (1B/2B) — pattern recognition, profile management, low-stakes tasks
+Cloud:       Complex analysis, multi-turn coaching, novel scenarios → encrypted API call
+Routing:     Automatic, based on task complexity + device capability + network availability
+
+LONG-TERM VISION
+─────────────────
+Proprietary fine-tuned model trained on conversational pattern recognition + social dynamics
+Dataset accumulated from day one (anonymised, consented)
+A general LLM is good at this task. A purpose-trained model is significantly better.
+```
+
+### Local Profile Storage
+
+```
+User Device (Sandboxed)
+│
+├── Contact Profiles (SQLite / encrypted local storage)
+│   ├── Response time distributions
+│   ├── Message length & vocabulary patterns
+│   ├── Emoji / punctuation habits
+│   └── Anomaly baselines
+│
+└── Session Context (in-memory only)
+    ├── Current conversation thread
+    └── Analysis cache
+
+Company Servers — receive:
+└── Anonymised analytics ONLY (session count, mode usage, subscription events)
+    NO message content. NO profile data. NO imports. Ever.
+```
+
+### Platform Architecture
+
+**Android** — Full capability
+- Custom keyboard via Android InputMethodService
+- Passive message capture via NotificationListenerService (optional, user-approved)
+- Local storage in app's private internal storage
+- Direct on-device model inference available
+
+**iOS** — Full capability with constraints
+- Custom keyboard via keyboard extension API
+- Manual copy-paste model (one tap — still 5× faster than competitors)
+- AI inference via companion app (due to iOS extension memory limits)
+- Full Access permission required for network calls; disclosed explicitly
+
+---
+
+## 🗺️ Roadmap
+
+### Phase 1 — Prototype *(Weeks 1–8)*
+> **Core question: Will people use this enough to pay for it?**
+
+- [ ] Android keyboard with copy-paste context panel
+- [ ] Gemini Flash API integration for analysis and reply generation
+- [ ] Modes: General, Dating, Interview
+- [ ] Help Levels 1–3
+- [ ] Ship to **50 real users**. Watch what they do. Talk to them.
+
+*Do not build: local profiles, history import, iOS, anything not required to answer the core question.*
+
+### Phase 2 — MVP *(Weeks 9–20)*
+> **If Phase 1 shows real usage + willingness to pay:**
+
+- [ ] Local contact profiles on Android
+- [ ] Instagram JSON import flow (on-device processing)
+- [ ] Notification listener for passive message capture
+- [ ] All 5 modes + all 5 Help Levels
+- [ ] Second Brain — contact profiles, important dates, proactive reminders
+- [ ] Subscription infrastructure (free vs paid tier)
+- [ ] Soft launch on Google Play Store in India
+
+### Phase 3 — Growth *(Month 6+)*
+> **Post-revenue-evidence:**
+
+- [ ] iOS keyboard extension launch
+- [ ] On-device model integration for core analysis
+- [ ] Tone coaching feature
+- [ ] Second Brain encrypted cloud sync (user-held keys, zero-knowledge architecture)
+- [ ] Expanded conversation history across sessions for paid users
+- [ ] Begin collecting anonymised, consented training data for proprietary model
+- [ ] Seed / angel funding round
+
+---
+
+## 💰 Pricing
+
+Calibrated to India at launch — low enough that a motivated 19-year-old pays without asking anyone.
+
+| | **Free** | **Mind The Gap Plus** | **Mind The Gap Pro** |
+|---|:---:|:---:|:---:|
+| Price | ₹0 | **₹199/mo** (~$2.40) | **₹399/mo** (~$4.80) |
+| Daily analyses | 5 | Unlimited | Unlimited |
+| Reply suggestions | 3 per analysis | 3 per analysis | 3 per analysis |
+| Conversation modes | General only | All 6 modes | All 6 modes |
+| Help Levels | 1–3 | 1–3 | 1–5 (incl. coaching + ghost-write) |
+| Session context | ✅ | ✅ | ✅ |
+| Cross-session history | ❌ | ❌ | ✅ |
+| Local contact profiles | ❌ | ✅ | ✅ |
+| History import (Instagram, WhatsApp) | ❌ | ❌ | ✅ |
+| Second Brain | ❌ | ❌ | ✅ |
+| Encrypted cloud sync | ❌ | ❌ | ✅ |
+
+---
+
+## 📊 Market
+
+| Definition | Market Size |
+|---|---|
+| Global mental health app market (2023) | **$6.2B** — growing 16% CAGR through 2030 |
+| AI writing & communication assistant market | **$1.9B** (2023) — Grammarly, Jasper, Copy.ai territory |
+| AI texting & social coaching apps | **Nascent — first-mover window open** |
+
+**Target Segments:**
+- 💘 Young men navigating romantic texting (16–28) — largest segment, highest willingness to pay, strongest word-of-mouth
+- 💬 Young women reading ambiguous social signals — same acute pain, different use pattern
+- 📋 Job seekers managing professional communication — distinct mode, high value per interaction
+- ♾️ Neurodivergent users — smaller but extremely motivated; this is an accessibility tool, not a convenience
+- 🌱 Social anxiety sufferers in active recovery — want skill-building, not dependency
+
+**Why India First:**
+- 500M+ WhatsApp monthly active users (largest globally)
+- ~95% Android market share → notification listener available to virtually everyone
+- Culturally amplified text anxiety (family pressure, relationship stigma)
+- Regulatory flexibility for early-stage iteration
+- Proven path → Southeast Asia → Middle East → West
+
+---
+
+## 🛡️ Privacy by Architecture
+
+Privacy isn't a policy at Mind The Gap. It's a technical fact.
+
+```
+What leaves the device during analysis:
+  ✅ The message content being analysed (ephemeral, processed, discarded)
+  ✅ Anonymised session analytics
+
+What NEVER leaves the device:
+  ❌ Raw conversation history
+  ❌ Contact profiles
+  ❌ Import files (processed locally, deleted)
+  ❌ Behavioural pattern data
+```
+
+> The most common privacy enforcement action against consumer apps comes from a journalist running a network inspection tool — and discovering that an app claiming to be private is sending personal data to servers. Mind The Gap's architecture makes that story impossible to write. The data genuinely does not leave the device. That is not a legal disclaimer. It is a technical fact.
+
+---
+
+## 🚦 Current Status
+
+```
+Phase 1 — Prototype
+[████████░░░░░░░░░░░░] 40% — In development
+
+Next milestone: Functional Android keyboard with Gemini Flash integration
+Ship date target: 8 weeks
+```
+
+
+
+<div align="center">
+
+---
+
+**The bottom line:**
+
+*Mind The Gap is a buildable, defensible, market-validated idea with a specific technical insight at its core that competitors have not executed. The problem is real. The pain is acute. The user is motivated. The existing market demonstrates willingness to pay. The keyboard integration solves the primary UX friction that competitors have failed to eliminate.*
+
+**Stop planning. Start shipping the prototype.**
+
+---
+
+*v1.0 — Confidential — 2025*
+
+</div>
