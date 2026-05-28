@@ -25,7 +25,10 @@
     lastAnalysis: null,
     isAnalyzing: false,
     hasApiKey: false,
-    toasts: []
+    toasts: [],
+    activeTab: 'analyze',
+    isGeneratingOpener: false,
+    openerResult: null
   };
 
   const HELP_LEVEL_DESC = {
@@ -116,6 +119,13 @@
       analyzeBtn: panel.querySelector('.st-analyze-btn'),
       resultsArea: panel.querySelector('#st-results-area'),
       footerSettingsLink: panel.querySelector('.st-panel__footer-link'),
+      tabs: panel.querySelectorAll('.st-tabs__btn'),
+      tabAnalyze: panel.querySelector('#st-tab-analyze'),
+      tabOpeners: panel.querySelector('#st-tab-openers'),
+      openerTextarea: panel.querySelector('.st-textarea--opener'),
+      openerCharCount: panel.querySelector('.st-char-count-opener'),
+      generateBtn: panel.querySelector('.st-generate-btn'),
+      openerResultsArea: panel.querySelector('#st-opener-results-area'),
     };
   }
 
@@ -138,53 +148,83 @@
           <button class="st-modes__btn" data-mode="interview" role="radio" aria-checked="false">💼 Interview</button>
         </div>
 
-        <!-- Help Level -->
-        <div class="st-section-label">Help Level</div>
-        <div class="st-help-level">
-          <div class="st-help-level__controls" role="radiogroup" aria-label="Help level">
-            <button class="st-help-level__btn" data-level="1" role="radio" aria-checked="false">Level 1</button>
-            <button class="st-help-level__btn" data-level="2" role="radio" aria-checked="false">Level 2</button>
-            <button class="st-help-level__btn st-help-level__btn--active" data-level="3" role="radio" aria-checked="true">Level 3</button>
-          </div>
-          <div class="st-help-level__desc">${HELP_LEVEL_DESC[3]}</div>
+        <!-- Sliding Tabs Navigation -->
+        <div class="st-tabs">
+          <button class="st-tabs__btn st-tabs__btn--active" data-tab="analyze">🔍 Message Analyzer</button>
+          <button class="st-tabs__btn" data-tab="openers">⚡ One-Liners</button>
         </div>
 
-        <div class="st-divider"></div>
-
-        <!-- Context Thread -->
-        <div class="st-context">
-          <div class="st-context__header">
-            <div class="st-context__title">
-              💬 Conversation context <span class="st-context__count">0</span>
+        <!-- Tab Content: Analyze -->
+        <div class="st-tab-content" id="st-tab-analyze">
+          <!-- Help Level -->
+          <div class="st-section-label">Help Level</div>
+          <div class="st-help-level">
+            <div class="st-help-level__controls" role="radiogroup" aria-label="Help level">
+              <button class="st-help-level__btn" data-level="1" role="radio" aria-checked="false">Level 1</button>
+              <button class="st-help-level__btn" data-level="2" role="radio" aria-checked="false">Level 2</button>
+              <button class="st-help-level__btn st-help-level__btn--active" data-level="3" role="radio" aria-checked="true">Level 3</button>
             </div>
-            <span class="st-context__chevron">▾</span>
+            <div class="st-help-level__desc">${HELP_LEVEL_DESC[3]}</div>
           </div>
-          <div class="st-context__body">
-            <div class="st-context__messages"></div>
-            <div class="st-context__empty">No context yet. Analyze a message to start building context.</div>
-            <button class="st-context__clear" style="display:none;">Clear context</button>
+
+          <div class="st-divider"></div>
+
+          <!-- Context Thread -->
+          <div class="st-context">
+            <div class="st-context__header">
+              <div class="st-context__title">
+                💬 Conversation context <span class="st-context__count">0</span>
+              </div>
+              <span class="st-context__chevron">▾</span>
+            </div>
+            <div class="st-context__body">
+              <div class="st-context__messages"></div>
+              <div class="st-context__empty">No context yet. Analyze a message to start building context.</div>
+              <button class="st-context__clear" style="display:none;">Clear context</button>
+            </div>
           </div>
+
+          <!-- Message Input -->
+          <div class="st-input-group">
+            <div class="st-section-label">Message to analyze</div>
+            <textarea class="st-textarea" placeholder="Paste the message you received..." maxlength="${MAX_MESSAGE_LENGTH}" rows="3"></textarea>
+            <div class="st-textarea-footer">
+              <button class="st-person-toggle">+ Add context about this person</button>
+              <span class="st-char-count">0 / ${MAX_MESSAGE_LENGTH}</span>
+            </div>
+            <input class="st-person-input" style="display:none;" type="text" placeholder='e.g. "a girl from Hinge" or "my manager"' />
+          </div>
+
+          <!-- Analyze Button -->
+          <button class="st-analyze-btn" disabled>
+            ✨ Analyze Message
+            <span class="st-analyze-btn__shortcut">Ctrl+Enter</span>
+          </button>
+
+          <!-- Results Area (dynamic content) -->
+          <div id="st-results-area"></div>
         </div>
 
-        <!-- Message Input -->
-        <div class="st-input-group">
-          <div class="st-section-label">Message to analyze</div>
-          <textarea class="st-textarea" placeholder="Paste the message you received..." maxlength="${MAX_MESSAGE_LENGTH}" rows="3"></textarea>
-          <div class="st-textarea-footer">
-            <button class="st-person-toggle">+ Add context about this person</button>
-            <span class="st-char-count">0 / ${MAX_MESSAGE_LENGTH}</span>
+        <!-- Tab Content: One-Liners -->
+        <div class="st-tab-content st-tab-content--hidden" id="st-tab-openers">
+          <!-- Opener Input Group -->
+          <div class="st-input-group">
+            <div class="st-section-label">Who or what is this opener for?</div>
+            <textarea class="st-textarea st-textarea--opener" placeholder="e.g., Someone on Hinge who loves hiking and authentic carbonara pasta..." maxlength="${MAX_MESSAGE_LENGTH}" rows="3"></textarea>
+            <div class="st-textarea-footer">
+              <span class="st-char-count-opener">0 / ${MAX_MESSAGE_LENGTH}</span>
+            </div>
           </div>
-          <input class="st-person-input" style="display:none;" type="text" placeholder='e.g. "a girl from Hinge" or "my manager"' />
+
+          <!-- Generate Button -->
+          <button class="st-generate-btn" disabled>
+            ✨ Generate One-Liners
+            <span class="st-generate-btn__shortcut">Ctrl+Enter</span>
+          </button>
+
+          <!-- Opener Results Area (dynamic content) -->
+          <div id="st-opener-results-area"></div>
         </div>
-
-        <!-- Analyze Button -->
-        <button class="st-analyze-btn" disabled>
-          ✨ Analyze Message
-          <span class="st-analyze-btn__shortcut">Ctrl+Enter</span>
-        </button>
-
-        <!-- Results Area (dynamic content) -->
-        <div id="st-results-area"></div>
       </div>
 
       <!-- Footer -->
@@ -282,6 +322,46 @@
         chrome.runtime.openOptionsPage();
       }
     });
+
+    // Tab switcher binding
+    refs.tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const selectedTab = tab.dataset.tab;
+        if (state.activeTab === selectedTab) return;
+        state.activeTab = selectedTab;
+        
+        refs.tabs.forEach(t => t.classList.toggle('st-tabs__btn--active', t.dataset.tab === selectedTab));
+        
+        if (selectedTab === 'analyze') {
+          refs.tabAnalyze.classList.remove('st-tab-content--hidden');
+          refs.tabOpeners.classList.add('st-tab-content--hidden');
+        } else {
+          refs.tabAnalyze.classList.add('st-tab-content--hidden');
+          refs.tabOpeners.classList.remove('st-tab-content--hidden');
+        }
+      });
+    });
+
+    // Opener textarea bindings
+    if (refs.openerTextarea) {
+      refs.openerTextarea.addEventListener('input', handleOpenerTextareaInput);
+      refs.openerTextarea.addEventListener('paste', () => {
+        setTimeout(() => handleOpenerTextareaInput(), 0);
+      });
+      refs.openerTextarea.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          if (!refs.generateBtn.disabled && !state.isGeneratingOpener) {
+            generateOneLiners();
+          }
+        }
+      });
+    }
+
+    // Generate button click binding
+    if (refs.generateBtn) {
+      refs.generateBtn.addEventListener('click', generateOneLiners);
+    }
   }
 
   // ---- Panel Toggle ----
@@ -483,6 +563,191 @@
       refs.analyzeBtn.disabled = refs.textarea.value.length === 0;
       refs.analyzeBtn.innerHTML = `✨ Analyze Message <span class="st-analyze-btn__shortcut">Ctrl+Enter</span>`;
       refs.analyzeBtn.classList.remove('st-analyze-btn--loading');
+    }
+  }
+
+  // ---- Openers Textarea Input Handler ----
+  function handleOpenerTextareaInput() {
+    const val = refs.openerTextarea.value;
+    const len = val.length;
+    
+    if (refs.openerCharCount) {
+      refs.openerCharCount.textContent = `${len} / ${MAX_MESSAGE_LENGTH}`;
+    }
+    
+    refs.generateBtn.disabled = len === 0 || state.isGeneratingOpener;
+  }
+
+  // ---- Generate One-Liners ----
+  async function generateOneLiners() {
+    if (!isContextValid()) {
+      handleContextInvalidated();
+      return;
+    }
+    const context = refs.openerTextarea.value.trim();
+    if (!context || state.isGeneratingOpener) return;
+
+    if (!state.hasApiKey) {
+      showSetupCard();
+      return;
+    }
+
+    state.isGeneratingOpener = true;
+    refs.generateBtn.disabled = true;
+    refs.generateBtn.innerHTML = `<div class="st-analyze-btn__spinner"></div> Generating...`;
+    refs.generateBtn.classList.add('st-generate-btn--loading');
+
+    // Show skeleton in opener results
+    showOpenerSkeleton();
+
+    try {
+      if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+        handleContextInvalidated();
+        return;
+      }
+
+      const response = await new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({
+          type: 'GENERATE_OPENER',
+          payload: {
+            context,
+            mode: state.mode
+          }
+        }, (res) => {
+          const err = chrome.runtime.lastError;
+          if (err) {
+            if (err.message.includes('context invalidated')) {
+              handleContextInvalidated();
+              reject(new Error('CONTEXT_INVALIDATED'));
+            } else {
+              reject(err);
+            }
+          } else {
+            resolve(res);
+          }
+        });
+      });
+
+      if (response.type === 'OPENER_RESULT') {
+        state.openerResult = response.payload;
+        renderOpenerResults(response.payload);
+      } else if (response.type === 'OPENER_ERROR') {
+        handleOpenerError(response.payload);
+      }
+    } catch (error) {
+      handleOpenerError({ error: error.message || 'NETWORK_ERROR', retryable: true });
+    } finally {
+      state.isGeneratingOpener = false;
+      refs.generateBtn.disabled = refs.openerTextarea.value.length === 0;
+      refs.generateBtn.innerHTML = `✨ Generate One-Liners`;
+      refs.generateBtn.classList.remove('st-generate-btn--loading');
+    }
+  }
+
+  // ---- Opener Skeleton Loader ----
+  function showOpenerSkeleton() {
+    refs.openerResultsArea.innerHTML = `
+      <div class="st-skeleton">
+        <div class="st-skeleton__section">
+          <div class="st-skeleton__bar st-skeleton__bar--short"></div>
+          <div class="st-skeleton__bar st-skeleton__bar--long"></div>
+        </div>
+        <div class="st-skeleton__section">
+          <div class="st-skeleton__bar st-skeleton__bar--short"></div>
+          <div class="st-skeleton__bar st-skeleton__bar--long"></div>
+        </div>
+        <div class="st-skeleton__section">
+          <div class="st-skeleton__bar st-skeleton__bar--short"></div>
+          <div class="st-skeleton__bar st-skeleton__bar--long"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ---- Render Opener Results ----
+  function renderOpenerResults(data) {
+    let html = '<div class="st-results st-opener-results">';
+
+    const risks = [
+      { key: 'safe', label: 'Safe', badgeClass: 'safe', color: '🟢' },
+      { key: 'risky', label: 'Little Risky', badgeClass: 'risky', color: '🟡' },
+      { key: 'unhinged', label: 'Unhinged', badgeClass: 'unhinged', color: '🔴' }
+    ];
+
+    risks.forEach(risk => {
+      const line = data[risk.key] || 'Unable to generate one-liner.';
+      html += `
+        <div class="st-reply-card st-opener-card">
+          <div class="st-reply-card__header">
+            <span class="st-risk-badge st-risk-badge--${risk.badgeClass}">
+              ${risk.color} ${risk.label}
+            </span>
+          </div>
+          <div class="st-reply-card__text" style="font-family: var(--st-font-primary); font-size: 13.5px; font-weight: 500; margin: 10px 0;">${escapeHtml(line)}</div>
+          <div class="st-reply-card__actions">
+            <button class="st-reply-card__btn st-reply-card__btn--copy-opener" data-text="${escapeHtml(line)}">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+              </svg>
+              Copy
+            </button>
+          </div>
+        </div>
+      `;
+    });
+
+    html += '</div>';
+    refs.openerResultsArea.innerHTML = html;
+    refs.openerResultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Copy event listener for openers
+    refs.openerResultsArea.querySelectorAll('.st-reply-card__btn--copy-opener').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.dataset.text;
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('One-liner copied!', 'success');
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '✓ Copied!';
+          btn.style.color = 'var(--st-success)';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.color = '';
+          }, 2000);
+        }).catch(() => {
+          copyTextFallback(text);
+          showToast('One-liner copied!', 'success');
+        });
+      });
+    });
+  }
+
+  // ---- Opener Error Handler ----
+  function handleOpenerError(payload) {
+    const errorMsg = payload.error || 'An error occurred';
+    let displayMsg = 'An error occurred while generating one-liners. Please try again.';
+    
+    if (errorMsg === 'NO_API_KEY') {
+      showSetupCard();
+      return;
+    } else if (errorMsg.startsWith('RATE_LIMITED')) {
+      displayMsg = 'Rate limit exceeded. Please wait a few seconds and try again.';
+    } else if (errorMsg.startsWith('INVALID_API_KEY')) {
+      displayMsg = 'Invalid API key. Please check your extension settings.';
+    } else if (errorMsg.startsWith('NETWORK_ERROR')) {
+      displayMsg = 'Network error. Please check your internet connection.';
+    }
+
+    refs.openerResultsArea.innerHTML = `
+      <div class="st-error-card">
+        <div class="st-error-card__icon">⚠️</div>
+        <div class="st-error-card__message">${escapeHtml(displayMsg)}</div>
+        ${payload.retryable ? `<button class="st-error-card__retry st-error-card__retry--opener">Retry</button>` : ''}
+      </div>
+    `;
+
+    const retryBtn = refs.openerResultsArea.querySelector('.st-error-card__retry--opener');
+    if (retryBtn) {
+      retryBtn.addEventListener('click', generateOneLiners);
     }
   }
 

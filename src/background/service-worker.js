@@ -343,6 +343,23 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     chrome.runtime.openOptionsPage();
     return false;
   }
+
+  if (message.type === 'GENERATE_OPENER') {
+    handleGenerateOpener(message.payload)
+      .then(function(result) {
+        sendResponse({ type: 'OPENER_RESULT', payload: result });
+      })
+      .catch(function(error) {
+        sendResponse({
+          type: 'OPENER_ERROR',
+          payload: {
+            error: error.message,
+            retryable: isRetryable(error)
+          }
+        });
+      });
+    return true; // Keep message channel open for async
+  }
 });
 
 async function handleAnalyze(payload) {
@@ -416,3 +433,172 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.sync.set(newSettings);
   });
 });
+
+// ============================================================
+// Opening Line / One-Liner Generator Logic
+// ============================================================
+
+const OPENER_BASE_PROMPT = `You are Mind The Gap, an AI that specializes in drafting brilliant, highly tailored opening lines (one-liners) for text conversations.
+Based on the context given, your job is to craft exactly three distinct opening lines: "safe", "risky", and "unhinged".
+
+You MUST respond ONLY with valid JSON matching this exact schema (no markdown, no code fences, just raw JSON):
+{
+  "safe": "The safe, low-risk opening line",
+  "risky": "The slightly bold or playful opening line",
+  "unhinged": "The completely unhinged, bizarre, funny or highly unconventional opening line"
+}
+
+RULES FOR RISKS:
+1. SAFE: Friendly, polite, low-stakes, easy and natural to respond to. Zero pressure.
+2. RISKY: Witty, slightly bold, teasing, cheeky banter, or opinionated. Shows confidence.
+3. UNHINGED: Quirky, surreal, funny, weirdly conceptual, or extremely bold, but MUST stay strictly appropriate for the selected mode.
+
+MODE RULES:
+- general: Conversational, witty, casual. The unhinged opener should be funny, surreal, or bizarre but socially safe (e.g., funny debate questions).
+- dating: Flirtatious, high chemistry, light teasing, or charmingly weird. The unhinged opener can be delightfully unhinged, funny, or bold.
+- interview: Professional, polite, networking or follow-up context. MUST BE 100% SAFE-FOR-WORK (SFW) AND FORMAL. Even the "unhinged" opener must remain strictly SFW, professional, and respectful, but can be highly memorable, bold, or creative (e.g., pitching a bold thesis, sharing a highly creative/quirky yet strictly polite professional idea, or starting with a direct, ultra-confident business hook). NEVER use informal slang, jokes, or flirtatious remarks in interview mode.
+`;
+
+function buildOpenerSystemPrompt(mode) {
+  let prompt = OPENER_BASE_PROMPT;
+  prompt += `\nCURRENT MODE: ${mode.toUpperCase()}\n`;
+  if (mode === 'general') {
+    prompt += `\nFOCUS: Friendly, lighthearted, clever, or witty. Ensure that even the unhinged option is a fun conversation starter, not weird in an offensive way.\n`;
+  } else if (mode === 'dating') {
+    prompt += `\nFOCUS: Charm, chemistry, dynamic energy, light banter, or flirting. The safe option should be pleasant and engaging, the risky option should be direct/cheeky, and the unhinged option should be charmingly weird or extremely bold and funny.\n`;
+  } else if (mode === 'interview') {
+    prompt += `\nFOCUS: Professional networking, recruiter messages, or hiring follow-up. MUST BE 100% SFW. The safe option is standard and ultra-polite. The risky option is highly direct and ultra-confident. The unhinged option should be highly unconventional, memorable, bold, or creative, but STILL strictly polite, professional, and respectful. NEVER use informal slang, jokes, or flirtatious remarks in interview mode.\n`;
+  }
+  return prompt;
+}
+
+async function handleGenerateOpener(payload) {
+  const settings = await getFromStorage('sync', ['apiKey']);
+  const apiKey = settings.apiKey || HARDCODED_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('NO_API_KEY');
+  }
+
+  const mode = payload.mode || 'general';
+  const context = payload.context || '';
+
+  const systemPrompt = buildOpenerSystemPrompt(mode);
+  const userMessage = `CONTEXT/PROMPT FOR OPENING LINE: "${context}"`;
+
+  return await callGeminiOpener(apiKey, systemPrompt, userMessage);
+}
+
+async function callGeminiOpener(apiKey, systemPrompt, userMessage, retries) {
+  if (retries === undefined) retries = 2;
+  const url = `${GEMINI_API_URL}?key=${apiKey}`;
+
+  const body = {
+    contents: [
+      {
+        role: 'user',
+        parts: [{ text: userMessage }]
+      }
+    ],
+    systemInstruction: {
+      parts: [{ text: systemPrompt }]
+    },
+    generationConfig: {
+      temperature: 0.85,
+      topP: 0.95,
+      topK: 40,
+      maxOutputTokens: 1024,
+      responseMimeType: 'application/json'
+    }
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (response.status === 429) {
+      if (retries > 0) {
+        await delay(2000);
+        return callGeminiOpener(apiKey, systemPrompt, userMessage, retries - 1);
+      }
+      throw new Error('RATE_LIMITED');
+    }
+
+    if (response.status === 400) {
+      const errorData = await response.json().catch(function() { return {}; });
+      throw new Error('BAD_REQUEST: ' + (errorData?.error?.message || 'Invalid request'));
+    }
+
+    if (response.status === 403) {
+      throw new Error('INVALID_API_KEY');
+    }
+
+    if (!response.ok) {
+      if (retries > 0) {
+        await delay(1000);
+        return callGeminiOpener(apiKey, systemPrompt, userMessage, retries - 1);
+      }
+      throw new Error('API_ERROR: ' + response.status);
+    }
+
+    const data = await response.json();
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const text = parts.map(function(p) { return p.text || ''; }).join('');
+
+    if (!text || !text.trim()) {
+      throw new Error('EMPTY_RESPONSE');
+    }
+
+    return parseOpenerResponse(text);
+
+  } catch (error) {
+    if (error.message.startsWith('RATE_LIMITED') ||
+        error.message.startsWith('INVALID_API_KEY') ||
+        error.message.startsWith('BAD_REQUEST') ||
+        error.message.startsWith('API_ERROR')) {
+      throw error;
+    }
+
+    if (retries > 0) {
+      await delay(1000);
+      return callGeminiOpener(apiKey, systemPrompt, userMessage, retries - 1);
+    }
+
+    throw new Error('NETWORK_ERROR: ' + error.message);
+  }
+}
+
+function parseOpenerResponse(text) {
+  let cleaned = text.trim();
+
+  if (cleaned.startsWith('```')) {
+    cleaned = cleaned.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '');
+  }
+
+  try {
+    const parsed = JSON.parse(cleaned);
+    return {
+      safe: String(parsed.safe || ''),
+      risky: String(parsed.risky || ''),
+      unhinged: String(parsed.unhinged || '')
+    };
+  } catch (e) {
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      try {
+        const parsed = JSON.parse(jsonMatch[0]);
+        return {
+          safe: String(parsed.safe || ''),
+          risky: String(parsed.risky || ''),
+          unhinged: String(parsed.unhinged || '')
+        };
+      } catch (e2) {
+        throw new Error('PARSE_ERROR: Could not parse AI response as JSON');
+      }
+    }
+    throw new Error('PARSE_ERROR: No JSON found in AI response');
+  }
+}

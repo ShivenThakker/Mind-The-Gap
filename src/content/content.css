@@ -1202,3 +1202,152 @@
     animation: none;
   }
 }
+
+/* ============================================================
+   One-Liner Generator / Tab-switching Styles
+   ============================================================ */
+
+/* Tab Switching Content Visibility */
+.st-tab-content {
+  display: flex;
+  flex-direction: column;
+  animation: scaleIn var(--st-transition-default);
+}
+
+.st-tab-content--hidden {
+  display: none !important;
+}
+
+/* Sliding Tab bar container */
+.st-tabs {
+  display: flex;
+  background: var(--st-bg-secondary);
+  border-radius: var(--st-radius-md);
+  padding: 3px;
+  margin: 16px 0;
+  border: 1px solid var(--st-border);
+}
+
+.st-tabs__btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--st-text-secondary);
+  font-family: var(--st-font-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--st-transition-fast), background var(--st-transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.st-tabs__btn:hover {
+  color: var(--st-text-primary);
+}
+
+.st-tabs__btn--active {
+  color: #000000;
+  background: var(--st-accent);
+  font-weight: 700;
+  box-shadow: 0 2px 8px var(--st-accent-glow);
+}
+
+/* Generate button custom wrapper */
+.st-generate-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, var(--st-accent), var(--st-secondary));
+  border: none;
+  border-radius: var(--st-radius-md);
+  color: #000000;
+  font-family: var(--st-font-primary);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--st-transition-fast), box-shadow var(--st-transition-fast), filter var(--st-transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.st-generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--st-accent-glow);
+}
+
+.st-generate-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.st-generate-btn--loading {
+  background: var(--st-bg-tertiary) !important;
+  color: var(--st-text-secondary) !important;
+}
+
+.st-generate-btn__shortcut {
+  font-size: 10.5px;
+  font-family: var(--st-font-mono);
+  background: hsla(0, 0%, 100%, 0.15);
+  color: var(--st-text-secondary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+/* Risk Badges Styling */
+.st-risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--st-radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.st-risk-badge--safe {
+  background: hsla(152, 68%, 50%, 0.15);
+  color: hsl(152, 68%, 55%);
+  border: 1px solid hsla(152, 68%, 50%, 0.25);
+}
+
+.st-risk-badge--risky {
+  background: hsla(38, 92%, 60%, 0.15);
+  color: hsl(38, 92%, 65%);
+  border: 1px solid hsla(38, 92%, 60%, 0.25);
+}
+
+.st-risk-badge--unhinged {
+  background: hsla(0, 72%, 60%, 0.15);
+  color: hsl(0, 72%, 65%);
+  border: 1px solid hsla(0, 72%, 60%, 0.25);
+}
+
+/* Result cards layout inside openers */
+.st-opener-results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.st-opener-card {
+  animation: slideUp var(--st-transition-default) both;
+}
+
+.st-opener-card:nth-child(1) { animation-delay: 50ms; }
+.st-opener-card:nth-child(2) { animation-delay: 150ms; }
+.st-opener-card:nth-child(3) { animation-delay: 250ms; }
+
