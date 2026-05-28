@@ -227,14 +227,16 @@ body {
 
 .popup__btn--secondary {
   background: hsl(0, 0%, 14%);
-  color: hsl(0, 0%, 85%);
+  color: #e0e0e0 !important;
   font-size: 14px;
   padding: 11px 16px;
+  -webkit-text-fill-color: #e0e0e0;
 }
 
 .popup__btn--secondary:hover {
   background: hsl(0, 0%, 18%);
-  color: hsl(0, 0%, 95%);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
 }
 
 /* Footer */
