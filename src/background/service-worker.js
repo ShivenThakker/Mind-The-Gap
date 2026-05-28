@@ -9,8 +9,7 @@
 // by default, so all logic is self-contained here.
 // ============================================================
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent';
 // Hardcoded Gemini API Key for the demo.
 // If this is set to a non-empty string, Subtext will use it directly.
 const HARDCODED_API_KEY = '';
@@ -203,7 +202,8 @@ async function callGemini(apiKey, systemPrompt, userMessage, retries) {
   } catch (error) {
     if (error.message.startsWith('RATE_LIMITED') ||
         error.message.startsWith('INVALID_API_KEY') ||
-        error.message.startsWith('BAD_REQUEST')) {
+        error.message.startsWith('BAD_REQUEST') ||
+        error.message.startsWith('API_ERROR')) {
       throw error;
     }
 
