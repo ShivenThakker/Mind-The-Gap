@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subtext</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup">
+    <div class="popup__header">
+      <div class="popup__logo">Subtext</div>
+      <span class="popup__version">v0.1</span>
+    </div>
+
+    <div class="popup__status" id="api-status">
+      <span class="popup__status-dot popup__status-dot--loading"></span>
+      <span class="popup__status-text">Checking...</span>
+    </div>
+
+    <div class="popup__section">
+      <div class="popup__label">Current Mode</div>
+      <div class="popup__modes">
+        <button class="popup__mode-btn popup__mode-btn--active" data-mode="general">💬 General</button>
+        <button class="popup__mode-btn" data-mode="dating">❤️ Dating</button>
+        <button class="popup__mode-btn" data-mode="interview">💼 Interview</button>
+      </div>
+    </div>
+
+    <div class="popup__section">
+      <div class="popup__label">Help Level</div>
+      <div class="popup__levels">
+        <button class="popup__level-btn" data-level="1">1</button>
+        <button class="popup__level-btn" data-level="2">2</button>
+        <button class="popup__level-btn popup__level-btn--active" data-level="3">3</button>
+      </div>
+    </div>
+
+    <div class="popup__actions">
+      <button class="popup__btn popup__btn--primary" id="open-panel-btn">
+        ✨ Open Subtext on this page
+      </button>
+      <button class="popup__btn popup__btn--secondary" id="settings-btn">
+        ⚙️ Settings
+      </button>
+    </div>
+
+    <div class="popup__footer">
+      Built for overthinkers 💜
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

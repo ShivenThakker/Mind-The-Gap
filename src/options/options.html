@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subtext — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options">
+    <div class="options__header">
+      <div class="options__logo">Subtext</div>
+      <div class="options__subtitle">Settings</div>
+    </div>
+
+    <div class="options__card">
+      <div class="options__card-header">
+        <span class="options__card-icon">🔑</span>
+        <div>
+          <div class="options__card-title">Gemini API Key</div>
+          <div class="options__card-desc">Get a free key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a> — it's free and takes 30 seconds.</div>
+        </div>
+      </div>
+      <div class="options__input-group">
+        <div class="options__input-wrapper">
+          <input type="password" id="api-key-input" class="options__input" placeholder="Paste your API key here..." autocomplete="off" />
+          <button class="options__toggle-visibility" id="toggle-key-visibility" aria-label="Toggle key visibility">👁️</button>
+        </div>
+        <button class="options__save-btn" id="save-key-btn">Save API Key</button>
+      </div>
+      <div class="options__status" id="key-status"></div>
+    </div>
+
+    <div class="options__card">
+      <div class="options__card-header">
+        <span class="options__card-icon">⚙️</span>
+        <div>
+          <div class="options__card-title">Default Preferences</div>
+          <div class="options__card-desc">These defaults are applied when you open Subtext on a new page.</div>
+        </div>
+      </div>
+
+      <div class="options__field">
+        <label class="options__label">Default Mode</label>
+        <div class="options__radio-group" id="mode-group">
+          <label class="options__radio">
+            <input type="radio" name="mode" value="general" checked />
+            <span class="options__radio-custom"></span>
+            💬 General
+          </label>
+          <label class="options__radio">
+            <input type="radio" name="mode" value="dating" />
+            <span class="options__radio-custom"></span>
+            ❤️ Dating
+          </label>
+          <label class="options__radio">
+            <input type="radio" name="mode" value="interview" />
+            <span class="options__radio-custom"></span>
+            💼 Interview
+          </label>
+        </div>
+      </div>
+
+      <div class="options__field">
+        <label class="options__label">Default Help Level</label>
+        <div class="options__radio-group" id="level-group">
+          <label class="options__radio">
+            <input type="radio" name="level" value="1" />
+            <span class="options__radio-custom"></span>
+            Level 1 — Analysis only
+          </label>
+          <label class="options__radio">
+            <input type="radio" name="level" value="2" />
+            <span class="options__radio-custom"></span>
+            Level 2 — Analysis + 1 reply
+          </label>
+          <label class="options__radio">
+            <input type="radio" name="level" value="3" checked />
+            <span class="options__radio-custom"></span>
+            Level 3 — Analysis + 3 replies
+          </label>
+        </div>
+      </div>
+
+      <div class="options__field">
+        <label class="options__label">Response Style</label>
+        <div class="options__radio-group" id="style-group">
+          <label class="options__radio">
+            <input type="radio" name="style" value="casual" />
+            <span class="options__radio-custom"></span>
+            Casual — chill, lowercase, emoji-friendly
+          </label>
+          <label class="options__radio">
+            <input type="radio" name="style" value="balanced" checked />
+            <span class="options__radio-custom"></span>
+            Balanced — natural and conversational
+          </label>
+          <label class="options__radio">
+            <input type="radio" name="style" value="formal" />
+            <span class="options__radio-custom"></span>
+            Formal — polished and proper
+          </label>
+        </div>
+      </div>
+
+      <button class="options__save-btn options__save-btn--secondary" id="save-prefs-btn">Save Preferences</button>
+      <div class="options__status" id="prefs-status"></div>
+    </div>
+
+    <div class="options__card options__card--danger">
+      <div class="options__card-header">
+        <span class="options__card-icon">🗑️</span>
+        <div>
+          <div class="options__card-title">Clear All Data</div>
+          <div class="options__card-desc">Delete your API key, preferences, and all analysis history. This cannot be undone.</div>
+        </div>
+      </div>
+      <button class="options__danger-btn" id="clear-data-btn">Clear All Data</button>
+    </div>
+
+    <div class="options__footer">
+      Subtext v0.1 — Built for overthinkers 💜
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
