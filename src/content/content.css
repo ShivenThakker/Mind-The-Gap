@@ -380,7 +380,7 @@
   text-transform: uppercase;
   letter-spacing: 0.8px;
   color: var(--st-text-tertiary);
-  margin-bottom: -8px;
+  margin-bottom: 0px;
 }
 
 /* ---- Context Thread ---- */
@@ -1211,6 +1211,7 @@
 .st-tab-content {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   animation: scaleIn var(--st-transition-default);
 }
 

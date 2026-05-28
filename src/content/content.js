@@ -141,11 +141,13 @@
       <!-- Body -->
       <div class="st-panel__body">
         <!-- Mode Selector -->
-        <div class="st-section-label">Mode</div>
-        <div class="st-modes" role="radiogroup" aria-label="Analysis mode">
-          <button class="st-modes__btn st-modes__btn--active" data-mode="general" role="radio" aria-checked="true">💬 General</button>
-          <button class="st-modes__btn" data-mode="dating" role="radio" aria-checked="false">❤️ Dating</button>
-          <button class="st-modes__btn" data-mode="interview" role="radio" aria-checked="false">💼 Interview</button>
+        <div class="st-input-group">
+          <div class="st-section-label">Mode</div>
+          <div class="st-modes" role="radiogroup" aria-label="Analysis mode">
+            <button class="st-modes__btn st-modes__btn--active" data-mode="general" role="radio" aria-checked="true">💬 General</button>
+            <button class="st-modes__btn" data-mode="dating" role="radio" aria-checked="false">❤️ Dating</button>
+            <button class="st-modes__btn" data-mode="interview" role="radio" aria-checked="false">💼 Interview</button>
+          </div>
         </div>
 
         <!-- Sliding Tabs Navigation -->
@@ -157,14 +159,16 @@
         <!-- Tab Content: Analyze -->
         <div class="st-tab-content" id="st-tab-analyze">
           <!-- Help Level -->
-          <div class="st-section-label">Help Level</div>
-          <div class="st-help-level">
-            <div class="st-help-level__controls" role="radiogroup" aria-label="Help level">
-              <button class="st-help-level__btn" data-level="1" role="radio" aria-checked="false">Level 1</button>
-              <button class="st-help-level__btn" data-level="2" role="radio" aria-checked="false">Level 2</button>
-              <button class="st-help-level__btn st-help-level__btn--active" data-level="3" role="radio" aria-checked="true">Level 3</button>
+          <div class="st-input-group">
+            <div class="st-section-label">Help Level</div>
+            <div class="st-help-level">
+              <div class="st-help-level__controls" role="radiogroup" aria-label="Help level">
+                <button class="st-help-level__btn" data-level="1" role="radio" aria-checked="false">Level 1</button>
+                <button class="st-help-level__btn" data-level="2" role="radio" aria-checked="false">Level 2</button>
+                <button class="st-help-level__btn st-help-level__btn--active" data-level="3" role="radio" aria-checked="true">Level 3</button>
+              </div>
+              <div class="st-help-level__desc">${HELP_LEVEL_DESC[3]}</div>
             </div>
-            <div class="st-help-level__desc">${HELP_LEVEL_DESC[3]}</div>
           </div>
 
           <div class="st-divider"></div>
@@ -955,15 +959,15 @@
     }
 
     const errorMessages = {
-      'NO_API_KEY': { icon: '🔑', message: 'No API key found. Set up your free Gemini API key in Settings to get started.', showSetup: true },
-      'INVALID_API_KEY': { icon: '🔑', message: 'Your API key doesn\'t seem to be working. Please check it in Settings.', showSetup: true },
-      'RATE_LIMITED': { icon: '⏳', message: 'Too many requests. The free tier allows 15 per minute. Please wait a moment and try again.' },
-      'NETWORK_ERROR': { icon: '📡', message: 'Couldn\'t reach the AI service. Please check your internet connection and try again.' },
-      'PARSE_ERROR': { icon: '🔧', message: 'Something went wrong processing the response. Please try again.' },
+      'NO_API_KEY': { icon: '🔮', message: 'No API key found. Set up your free Gemini API key in Settings to get started.', showSetup: true },
+      'INVALID_API_KEY': { icon: '⚠️', message: 'Invalid API key. Please check your extension settings.', showSetup: false },
+      'RATE_LIMITED': { icon: '⏳', message: 'Too many requests. The free tier allows 15 per minute. Please wait a moment and try again.', showSetup: false },
+      'NETWORK_ERROR': { icon: '📡', message: 'Couldn\'t reach the AI service. Please check your internet connection and try again.', showSetup: false },
+      'PARSE_ERROR': { icon: '🔧', message: 'Something went wrong processing the response. Please try again.', showSetup: false },
     };
 
     const errorKey = Object.keys(errorMessages).find(key => errMsg.startsWith(key));
-    const errInfo = errorMessages[errorKey] || { icon: '❌', message: 'Something went wrong. Please try again.' };
+    const errInfo = errorMessages[errorKey] || { icon: '❌', message: 'Something went wrong. Please try again.', showSetup: false };
 
     if (errInfo.showSetup) {
       showSetupCard();
@@ -974,13 +978,22 @@
       <div class="st-error-card">
         <div class="st-error-card__icon">${errInfo.icon}</div>
         <div class="st-error-card__message">${errInfo.message}</div>
-        ${error.retryable ? '<button class="st-error-card__retry">Try again</button>' : ''}
+        ${error.retryable 
+          ? '<button class="st-error-card__retry">Try again</button>' 
+          : '<button class="st-error-card__retry st-error-card__open-settings" style="margin-top: 15px;">⚙️ Open Settings</button>'
+        }
       </div>
     `;
 
     const retryBtn = refs.resultsArea.querySelector('.st-error-card__retry');
     if (retryBtn) {
-      retryBtn.addEventListener('click', analyzeMessage);
+      if (retryBtn.classList.contains('st-error-card__open-settings')) {
+        retryBtn.addEventListener('click', () => {
+          chrome.runtime.openOptionsPage?.();
+        });
+      } else {
+        retryBtn.addEventListener('click', analyzeMessage);
+      }
     }
   }
 

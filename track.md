@@ -7,7 +7,7 @@
 
 ---
 
-## Status: 🟢 One-Liner Generator fully integrated with sliding tab navigation, dynamic risk levels, and strict interview guardrails.
+## Status: 🟢 UX Spacing refined, invalid API key error handling polished, and One-Liner Generator fully integrated.
 
 ---
 
@@ -84,6 +84,13 @@
 - [x] Embedded strict prompt guardrails in Interview mode to ensure the **Unhinged** option remains 100% SFW, polite, and professional while offering highly memorable and creative hooks.
 - [x] Styled risk-level badges (emerald, amber, neon orange-red), cards, copy buttons, and premium stagger-reveal slideUp transitions in content.css.
 
+### Session 8 — 2026-05-29 (UX Spacing & API Key Error Polish)
+
+- [x] Corrected negative section label margins (changing `margin-bottom: -8px;` to `margin-bottom: 0px;`), resolving overlaps where selectors/textareas buried labels.
+- [x] Injected a consistent 16px flex gap across the slide-out tab containers (`.st-tab-content`), giving beautiful and readable vertical spacing between context box, message input, action buttons, and divider elements.
+- [x] Wrapped the Mode and Help Level selectors in input groups (`.st-input-group`) to ensure unified and flawless control margins.
+- [x] Upgraded analysis error handling (`handleAnalysisError`) to differentiate between a missing API key and an invalid/leaked key. When the key is set but invalid (re-occurring leaked key failure), it now displays a polished warning card with an "Open Settings" shortcut rather than first-time welcome setup prompts.
+
 ---
 
 ## What Needs To Be Done Next
@@ -147,7 +154,10 @@
 15. `2ab457b` — style: update app logo and extension icons
 16. `13c790d` — chore: add Gemini API diagnostic test script
 17. `4780856` — fix: hide bubble when panel open; white text on Settings button
-18. `3a6f3b3` — feat: add multi-mode Opening Line Generator with dynamic risk levels
+18. `f91e0e0` — chore: add track.md and subtext.md to .gitignore and stop tracking them
+19. `3a6f3b3` — feat: add multi-mode Opening Line Generator with dynamic risk levels
+20. `572daef` — docs: update track.md with session 7 progress
+21. `70dfcbf` — fix: correct spacing overlaps and polish invalid api key error handling
 
 ---
 
