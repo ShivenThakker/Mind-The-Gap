@@ -272,9 +272,9 @@
 
     // Footer settings link
     refs.footerSettingsLink.addEventListener('click', () => {
-      chrome.runtime.sendMessage({ type: 'OPEN_OPTIONS' });
+      safeSendMessage({ type: 'OPEN_OPTIONS' });
       // Fallback: try opening options page directly
-      if (chrome.runtime.openOptionsPage) {
+      if (chrome.runtime && chrome.runtime.openOptionsPage) {
         chrome.runtime.openOptionsPage();
       }
     });
@@ -423,16 +423,35 @@
     showLoadingSkeleton();
 
     try {
-      const response = await chrome.runtime.sendMessage({
-        type: 'ANALYZE',
-        payload: {
-          message,
-          mode: state.mode,
-          helpLevel: state.helpLevel,
-          context: state.context,
-          personDescription: state.personDescription,
-          responseStyle: state.responseStyle
-        }
+      if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+        handleContextInvalidated();
+        return;
+      }
+
+      const response = await new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({
+          type: 'ANALYZE',
+          payload: {
+            message,
+            mode: state.mode,
+            helpLevel: state.helpLevel,
+            context: state.context,
+            personDescription: state.personDescription,
+            responseStyle: state.responseStyle
+          }
+        }, (res) => {
+          const err = chrome.runtime.lastError;
+          if (err) {
+            if (err.message.includes('context invalidated')) {
+              handleContextInvalidated();
+              reject(new Error('CONTEXT_INVALIDATED'));
+            } else {
+              reject(err);
+            }
+          } else {
+            resolve(res);
+          }
+        });
       });
 
       if (response.type === 'ANALYSIS_RESULT') {
@@ -640,7 +659,7 @@
     refs.resultsArea.querySelectorAll('.st-feedback__btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const helpful = btn.dataset.feedback === 'up';
-        chrome.runtime.sendMessage({
+        safeSendMessage({
           type: 'SAVE_FEEDBACK',
           payload: { helpful, timestamp: Date.now() }
         });
@@ -722,7 +741,7 @@
 
   // ---- Load Settings ----
   function loadSettings() {
-    chrome.runtime.sendMessage({ type: 'GET_SETTINGS' }, (response) => {
+    safeSendMessage({ type: 'GET_SETTINGS' }, (response) => {
       if (response && response.payload) {
         const s = response.payload;
         if (s.defaultMode) setMode(s.defaultMode);
@@ -734,7 +753,7 @@
 
   // ---- Check API Key ----
   function checkApiKey() {
-    chrome.runtime.sendMessage({ type: 'CHECK_API_KEY' }, (response) => {
+    safeSendMessage({ type: 'CHECK_API_KEY' }, (response) => {
       if (response && response.payload) {
         state.hasApiKey = response.payload.hasKey;
       }
@@ -757,6 +776,49 @@
     textarea.select();
     try { document.execCommand('copy'); } catch (e) { /* ignore */ }
     document.body.removeChild(textarea);
+  }
+
+  // ---- Robust Message Wrapper with Context Invalidation Handling ----
+  function safeSendMessage(message, callback) {
+    try {
+      if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+        handleContextInvalidated();
+        return;
+      }
+      chrome.runtime.sendMessage(message, (response) => {
+        const err = chrome.runtime.lastError;
+        if (err) {
+          if (err.message.includes('context invalidated')) {
+            handleContextInvalidated();
+          } else {
+            console.error('Extension error:', err);
+          }
+          return;
+        }
+        if (callback) callback(response);
+      });
+    } catch (e) {
+      if (e.message.includes('context invalidated')) {
+        handleContextInvalidated();
+      } else {
+        console.error('Runtime exception:', e);
+      }
+    }
+  }
+
+  function handleContextInvalidated() {
+    showToast('Mind The Gap has been reloaded. Please refresh the page!', 'error');
+    if (refs.resultsArea) {
+      refs.resultsArea.innerHTML = `
+        <div class="st-error-card">
+          <div class="st-error-card__icon">🔄</div>
+          <div class="st-error-card__message" style="margin-top: 10px;">
+            Mind The Gap has been updated or reloaded in Developer mode. Please refresh this page to continue!
+          </div>
+          <button class="st-error-card__retry" style="margin-top: 15px;" onclick="window.location.reload()">Refresh Page</button>
+        </div>
+      `;
+    }
   }
 
   // ---- Listen for messages from popup/background ----
