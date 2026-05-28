@@ -47,7 +47,7 @@
   // ---- Load Styles ----
   const styleLink = document.createElement('link');
   styleLink.rel = 'stylesheet';
-  styleLink.href = chrome.runtime.getURL('src/content/content.css');
+  styleLink.href = chrome.runtime.getURL('src/content/content.css') + '?v=' + Date.now();
   shadow.appendChild(styleLink);
 
   // ---- Load Google Fonts ----
