@@ -53,6 +53,7 @@
 - [x] Renamed the application across all visual headers, logos, setup prompts, confirmation alerts, and browser manifest files from "Subtext" to "Mind The Gap".
 - [x] Integrated and scaled the new premium neon yellow/orange speech bubble logo into the extension assets, generating pixel-perfect icons for 16x16, 48x48, and 128x128 sizes, and preserving the high-resolution original logo in src/assets.
 - [x] Implemented elegant extension context invalidation recovery in content.js, wrapping all background communication in a safe runtime validator. Instead of throwing uncaught context invalidated exceptions when the extension is reloaded in developer mode, it now handles reloads gracefully and prompts the user to reload the page via a sleek error card and toast notice.
+- [x] Hardened context invalidation validation in content.js using a try-catch getManifest method. This completely catches severances pre-emptively on any API click or submission, completely eliminating synchronous console exceptions.
 
 ---
 

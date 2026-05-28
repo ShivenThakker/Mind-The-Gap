@@ -272,6 +272,10 @@
 
     // Footer settings link
     refs.footerSettingsLink.addEventListener('click', () => {
+      if (!isContextValid()) {
+        handleContextInvalidated();
+        return;
+      }
       safeSendMessage({ type: 'OPEN_OPTIONS' });
       // Fallback: try opening options page directly
       if (chrome.runtime && chrome.runtime.openOptionsPage) {
@@ -406,6 +410,10 @@
 
   // ---- Analyze Message ----
   async function analyzeMessage() {
+    if (!isContextValid()) {
+      handleContextInvalidated();
+      return;
+    }
     const message = refs.textarea.value.trim();
     if (!message || state.isAnalyzing) return;
 
@@ -673,6 +681,12 @@
 
   // ---- Error Handling ----
   function handleAnalysisError(error) {
+    const errMsg = error.error || '';
+    if (errMsg.includes('context invalidated') || errMsg === 'CONTEXT_INVALIDATED') {
+      handleContextInvalidated();
+      return;
+    }
+
     const errorMessages = {
       'NO_API_KEY': { icon: '🔑', message: 'No API key found. Set up your free Gemini API key in Settings to get started.', showSetup: true },
       'INVALID_API_KEY': { icon: '🔑', message: 'Your API key doesn\'t seem to be working. Please check it in Settings.', showSetup: true },
@@ -681,7 +695,7 @@
       'PARSE_ERROR': { icon: '🔧', message: 'Something went wrong processing the response. Please try again.' },
     };
 
-    const errorKey = Object.keys(errorMessages).find(key => (error.error || '').startsWith(key));
+    const errorKey = Object.keys(errorMessages).find(key => errMsg.startsWith(key));
     const errInfo = errorMessages[errorKey] || { icon: '❌', message: 'Something went wrong. Please try again.' };
 
     if (errInfo.showSetup) {
@@ -779,12 +793,20 @@
   }
 
   // ---- Robust Message Wrapper with Context Invalidation Handling ----
-  function safeSendMessage(message, callback) {
+  function isContextValid() {
     try {
-      if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
-        handleContextInvalidated();
-        return;
-      }
+      return !!(typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id && chrome.runtime.getManifest());
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function safeSendMessage(message, callback) {
+    if (!isContextValid()) {
+      handleContextInvalidated();
+      return;
+    }
+    try {
       chrome.runtime.sendMessage(message, (response) => {
         const err = chrome.runtime.lastError;
         if (err) {
