@@ -7,7 +7,7 @@
 
 ---
 
-## Status: 🟡 In Progress
+## Status: 🟢 Core Build Complete — Ready for Testing
 
 ---
 
@@ -15,29 +15,49 @@
 
 ### Session 1 — 2026-05-28
 
-- [ ] Project scaffolding (manifest.json, directory structure)
-- [ ] Floating bubble (content script injection, Shadow DOM)
-- [ ] Slide-out analysis panel UI
-- [ ] Mode selector (General / Dating / Interview)
-- [ ] Help level control (1-3)
-- [ ] Message input with paste detection
-- [ ] AI integration (Gemini Flash free tier)
-- [ ] System prompt library (per mode, per level)
-- [ ] Analysis results rendering (interpretations, tone, notices)
-- [ ] Reply suggestion cards with copy-to-clipboard
-- [ ] Context thread (conversation history within session)
-- [ ] Loading skeleton & toast notifications
-- [ ] Options page (API key entry, preferences)
-- [ ] Extension popup (toolbar icon)
-- [ ] Extension icons generated
-- [ ] Polish & animations
-- [ ] Final testing on WhatsApp Web
+- [x] Project scaffolding (manifest.json, directory structure, .gitignore)
+- [x] Floating bubble (content script injection, Shadow DOM, pulse animation)
+- [x] Slide-out analysis panel UI (420px, glassmorphism, slide animation)
+- [x] Mode selector (General / Dating / Interview) with pill toggle
+- [x] Help level control (1-3) with descriptions
+- [x] Message input with paste detection, char counter, Ctrl+Enter shortcut
+- [x] Person context input ("Who is this from?")
+- [x] AI integration — Gemini Flash free tier via service worker proxy
+- [x] System prompt library — 3 modes × 3 help levels × 3 response styles
+- [x] Analysis results rendering (interpretations with confidence dots, tone bar, notices)
+- [x] Reply suggestion cards with copy-to-clipboard + "Use & Edit"
+- [x] Context thread (conversation history within session, collapsible, clear)
+- [x] Loading skeleton with shimmer animation
+- [x] Toast notifications (success/error/info with auto-dismiss)
+- [x] Error handling (no API key, invalid key, rate limited, network error, parse error)
+- [x] Setup card for first-time users (links to Google AI Studio)
+- [x] Options page (API key entry with visibility toggle, mode/level/style prefs, clear data)
+- [x] Extension popup (toolbar icon — status, mode/level switching, open panel)
+- [x] Extension icons generated (16/48/128px — violet chat bubble)
+- [x] Google Fonts loading fix for Shadow DOM
+- [x] TOGGLE_PANEL message listener (popup → content script)
+- [x] Feedback system (thumbs up/down, stored in chrome.storage.local)
+- [x] Settings sync via chrome.storage.onChanged listener
 
 ---
 
 ## What Needs To Be Done Next
 
-_(Updated at end of each session)_
+- [ ] **Test on WhatsApp Web** — load extension, verify bubble appears, panel works
+- [ ] Test full analysis flow with a real Gemini API key
+- [ ] Test mode switching affects AI output
+- [ ] Test help level changes (Level 1 = no replies, Level 2 = 1, Level 3 = 3)
+- [ ] Test copy-to-clipboard works on WhatsApp Web
+- [ ] Test context persistence across multiple analyses
+- [ ] Polish any CSS edge cases (WhatsApp Web specific z-index conflicts, etc.)
+- [ ] Add README.md with installation instructions
+
+### Future (Post-Prototype)
+- [ ] Drag-to-reposition bubble
+- [ ] Keyboard shortcut (Ctrl+Shift+S) to toggle panel
+- [ ] Daily usage cap with localStorage
+- [ ] Analysis history in popup
+- [ ] Conversation export
 
 ---
 
@@ -45,9 +65,11 @@ _(Updated at end of each session)_
 
 - **Shadow DOM** isolates all injected UI from host pages (WhatsApp Web etc.)
 - **Service Worker** acts as API proxy — keeps Gemini API key out of page context
-- **chrome.storage.sync** for settings, **chrome.storage.local** for history/session
-- All components are vanilla JS, no frameworks
+- **chrome.storage.sync** for settings (synced across Chrome installs)
+- **chrome.storage.local** for feedback log
+- All components are vanilla JS, no frameworks, no build step required
 - All styles scoped inside Shadow DOM — no leakage to/from host page
+- Google Fonts loaded via `<link>` in `document.head` (required for Shadow DOM rendering)
 
 ---
 
@@ -63,4 +85,17 @@ _(Updated at end of each session)_
 
 ## Commits Log
 
-_(Entries added automatically as commits are made)_
+1. `55c851d` — feat: initial Chrome Extension scaffold (18 files, 4325 insertions)
+2. `e96b574` — fix: font loading in Shadow DOM
+
+---
+
+## How to Install & Test
+
+1. Open Chrome and go to `chrome://extensions`
+2. Enable **Developer mode** (toggle in top-right)
+3. Click **Load unpacked** and select the `Mind-The-Gap` folder
+4. The Subtext bubble should appear on every page (bottom-right corner)
+5. Click the extension icon in the toolbar → Settings → paste your **free** Gemini API key
+   - Get one at https://aistudio.google.com/apikey (free, 30 seconds)
+6. Open WhatsApp Web → click the bubble → paste a message → click Analyze
