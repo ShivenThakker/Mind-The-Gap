@@ -51,6 +51,7 @@
 - [x] Shifted the entire visual theme of the application (content script injected panel, floating bubble, extension popup, and settings options page) from a purple/violet gradient to a high-contrast neon yellow & orange theme on a deep pitch black background.
 - [x] Optimized all active elements (buttons, active pills, checked radio inputs, and floating bubble icon) to use high-contrast solid black text and icons for perfect legibility and a striking neon visual pop.
 - [x] Renamed the application across all visual headers, logos, setup prompts, confirmation alerts, and browser manifest files from "Subtext" to "Mind The Gap".
+- [x] Integrated and scaled the new premium neon yellow/orange speech bubble logo into the extension assets, generating pixel-perfect icons for 16x16, 48x48, and 128x128 sizes, and preserving the high-resolution original logo in src/assets.
 
 ---
 
