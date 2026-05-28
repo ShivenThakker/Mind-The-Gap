@@ -44,6 +44,7 @@
 - [x] Restrained content script injection to specific messaging sites only (`WhatsApp Web`, `Telegram Web`, `Instagram`, `Messenger`, `Slack`, `Discord`) in `manifest.json`
 - [x] Added support for a hardcoded Gemini API key (`const HARDCODED_API_KEY` fallback) in the background service worker, making key entry completely optional for the demo
 - [x] Updated the popup and options scripts to check for the hardcoded API key and display a clean status badge/notice if found, providing a smooth user experience
+- [x] Created README.md with clear installation instructions and project documentation in the root directory
 
 ---
 
@@ -56,7 +57,7 @@
 - [ ] Test copy-to-clipboard works on WhatsApp Web
 - [ ] Test context persistence across multiple analyses
 - [ ] Polish any CSS edge cases (WhatsApp Web specific z-index conflicts, etc.)
-- [ ] Add README.md with installation instructions
+- [x] Add README.md with installation instructions
 
 ### Future (Post-Prototype)
 - [ ] Drag-to-reposition bubble
