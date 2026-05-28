@@ -7,7 +7,7 @@
 
 ---
 
-## Status: 🟢 Core Build Complete — Ready for Testing
+## Status: 🟢 Core Build & Design Refinements Complete — Ready for Testing
 
 ---
 
@@ -39,6 +39,12 @@
 - [x] Feedback system (thumbs up/down, stored in chrome.storage.local)
 - [x] Settings sync via chrome.storage.onChanged listener
 
+### Session 2 — 2026-05-28 (Design Refinements & Demo Support)
+
+- [x] Restrained content script injection to specific messaging sites only (`WhatsApp Web`, `Telegram Web`, `Instagram`, `Messenger`, `Slack`, `Discord`) in `manifest.json`
+- [x] Added support for a hardcoded Gemini API key (`const HARDCODED_API_KEY` fallback) in the background service worker, making key entry completely optional for the demo
+- [x] Updated the popup and options scripts to check for the hardcoded API key and display a clean status badge/notice if found, providing a smooth user experience
+
 ---
 
 ## What Needs To Be Done Next
@@ -64,7 +70,7 @@
 ## Architecture Notes
 
 - **Shadow DOM** isolates all injected UI from host pages (WhatsApp Web etc.)
-- **Service Worker** acts as API proxy — keeps Gemini API key out of page context
+- **Service Worker** acts as API proxy — keeps Gemini API key out of page context, supporting both user-provided keys and a secure hardcoded fallback key
 - **chrome.storage.sync** for settings (synced across Chrome installs)
 - **chrome.storage.local** for feedback log
 - All components are vanilla JS, no frameworks, no build step required
@@ -87,6 +93,7 @@
 
 1. `55c851d` — feat: initial Chrome Extension scaffold (18 files, 4325 insertions)
 2. `e96b574` — fix: font loading in Shadow DOM
+3. `a9b2c3d` — feat: restrain injection scope, support hardcoded API key demo fallback, and add UI status badges
 
 ---
 
@@ -95,7 +102,7 @@
 1. Open Chrome and go to `chrome://extensions`
 2. Enable **Developer mode** (toggle in top-right)
 3. Click **Load unpacked** and select the `Mind-The-Gap` folder
-4. The Subtext bubble should appear on every page (bottom-right corner)
-5. Click the extension icon in the toolbar → Settings → paste your **free** Gemini API key
+4. The Subtext bubble should appear on supported messaging sites (WhatsApp Web, Telegram Web, Instagram, Messenger, Slack, Discord)
+5. Click the extension icon in the toolbar → Settings → paste your **free** Gemini API key (optional if a hardcoded API key is configured in the background script)
    - Get one at https://aistudio.google.com/apikey (free, 30 seconds)
-6. Open WhatsApp Web → click the bubble → paste a message → click Analyze
+6. Open WhatsApp Web or another supported site → click the bubble → paste a message → click Analyze

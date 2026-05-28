@@ -10,9 +10,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const levelButtons = document.querySelectorAll('.popup__level-btn');
 
   // ---- Load current settings ----
-  chrome.storage.sync.get(['apiKey', 'defaultMode', 'defaultHelpLevel'], (settings) => {
-    // API Key status
-    if (settings.apiKey) {
+  chrome.storage.sync.get(['defaultMode', 'defaultHelpLevel'], (settings) => {
+    // Mode
+    if (settings.defaultMode) {
+      modeButtons.forEach(btn => {
+        btn.classList.toggle('popup__mode-btn--active', btn.dataset.mode === settings.defaultMode);
+      });
+    }
+
+    // Help level
+    if (settings.defaultHelpLevel) {
+      levelButtons.forEach(btn => {
+        btn.classList.toggle('popup__level-btn--active', btn.dataset.level === String(settings.defaultHelpLevel));
+      });
+    }
+  });
+
+  // ---- Check API Key Status via Background Script ----
+  chrome.runtime.sendMessage({ type: 'CHECK_API_KEY' }, (response) => {
+    const hasKey = response && response.payload && response.payload.hasKey;
+    if (hasKey) {
       apiStatus.innerHTML = `
         <span class="popup__status-dot popup__status-dot--ok"></span>
         <span class="popup__status-text">API key configured</span>
@@ -25,20 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       document.getElementById('setup-key-btn')?.addEventListener('click', () => {
         chrome.runtime.openOptionsPage();
-      });
-    }
-
-    // Mode
-    if (settings.defaultMode) {
-      modeButtons.forEach(btn => {
-        btn.classList.toggle('popup__mode-btn--active', btn.dataset.mode === settings.defaultMode);
-      });
-    }
-
-    // Help level
-    if (settings.defaultHelpLevel) {
-      levelButtons.forEach(btn => {
-        btn.classList.toggle('popup__level-btn--active', btn.dataset.level === String(settings.defaultHelpLevel));
       });
     }
   });

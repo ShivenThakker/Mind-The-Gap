@@ -11,6 +11,10 @@
 
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
+// Hardcoded Gemini API Key for the demo.
+// If this is set to a non-empty string, Subtext will use it directly.
+const HARDCODED_API_KEY = '';
+
 // ---- System Prompt Library ----
 
 const BASE_PROMPT = `You are Subtext, an AI that specializes in decoding the hidden meaning behind text messages. You help people understand what a message actually means and craft the perfect reply.
@@ -321,7 +325,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
   if (message.type === 'CHECK_API_KEY') {
     chrome.storage.sync.get(['apiKey'], function(result) {
-      sendResponse({ type: 'API_KEY_STATUS', payload: { hasKey: !!result.apiKey } });
+      sendResponse({
+        type: 'API_KEY_STATUS',
+        payload: {
+          hasKey: !!result.apiKey || !!HARDCODED_API_KEY,
+          isHardcoded: !result.apiKey && !!HARDCODED_API_KEY
+        }
+      });
     });
     return true;
   }
@@ -334,7 +344,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
 async function handleAnalyze(payload) {
   const settings = await getFromStorage('sync', ['apiKey', 'responseStyle']);
-  const apiKey = settings.apiKey;
+  const apiKey = settings.apiKey || HARDCODED_API_KEY;
 
   if (!apiKey) {
     throw new Error('NO_API_KEY');

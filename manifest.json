@@ -8,14 +8,24 @@
     "activeTab"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "https://generativelanguage.googleapis.com/*"
   ],
   "background": {
     "service_worker": "src/background/service-worker.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "https://web.whatsapp.com/*",
+        "https://*.whatsapp.com/*",
+        "https://www.instagram.com/*",
+        "https://web.telegram.org/*",
+        "https://*.telegram.org/*",
+        "https://www.messenger.com/*",
+        "https://*.slack.com/*",
+        "https://discord.com/*",
+        "https://*.discord.com/*"
+      ],
       "js": ["src/content/content.js"],
       "run_at": "document_idle"
     }
@@ -45,7 +55,17 @@
   "web_accessible_resources": [
     {
       "resources": ["src/content/content.css"],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "https://web.whatsapp.com/*",
+        "https://*.whatsapp.com/*",
+        "https://www.instagram.com/*",
+        "https://web.telegram.org/*",
+        "https://*.telegram.org/*",
+        "https://www.messenger.com/*",
+        "https://*.slack.com/*",
+        "https://discord.com/*",
+        "https://*.discord.com/*"
+      ]
     }
   ]
 }

@@ -18,6 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (settings.apiKey) {
       apiKeyInput.value = settings.apiKey;
       showStatus(keyStatus, '✓ API key is saved', 'success');
+    } else {
+      // Check if background has a hardcoded key
+      chrome.runtime.sendMessage({ type: 'CHECK_API_KEY' }, (response) => {
+        if (response && response.payload && response.payload.isHardcoded) {
+          apiKeyInput.placeholder = 'Using hardcoded API key (from background)';
+          showStatus(keyStatus, '✓ Using hardcoded API key for demo', 'success');
+        }
+      });
     }
 
     if (settings.defaultMode) {
