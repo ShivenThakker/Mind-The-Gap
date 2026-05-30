@@ -229,87 +229,6 @@ Company Servers — receive:
 
 ---
 
-## 🗺️ Roadmap
-
-### Phase 1 — Prototype *(Weeks 1–8)*
-> **Core question: Will people use this enough to pay for it?**
-
-- [ ] Android keyboard with copy-paste context panel
-- [ ] Gemini Flash API integration for analysis and reply generation
-- [ ] Modes: General, Dating, Interview
-- [ ] Help Levels 1–3
-- [ ] Ship to **50 real users**. Watch what they do. Talk to them.
-
-*Do not build: local profiles, history import, iOS, anything not required to answer the core question.*
-
-### Phase 2 — MVP *(Weeks 9–20)*
-> **If Phase 1 shows real usage + willingness to pay:**
-
-- [ ] Local contact profiles on Android
-- [ ] Instagram JSON import flow (on-device processing)
-- [ ] Notification listener for passive message capture
-- [ ] All 5 modes + all 5 Help Levels
-- [ ] Second Brain — contact profiles, important dates, proactive reminders
-- [ ] Subscription infrastructure (free vs paid tier)
-- [ ] Soft launch on Google Play Store in India
-
-### Phase 3 — Growth *(Month 6+)*
-> **Post-revenue-evidence:**
-
-- [ ] iOS keyboard extension launch
-- [ ] On-device model integration for core analysis
-- [ ] Tone coaching feature
-- [ ] Second Brain encrypted cloud sync (user-held keys, zero-knowledge architecture)
-- [ ] Expanded conversation history across sessions for paid users
-- [ ] Begin collecting anonymised, consented training data for proprietary model
-- [ ] Seed / angel funding round
-
----
-
-## 💰 Pricing
-
-Calibrated to India at launch — low enough that a motivated 19-year-old pays without asking anyone.
-
-| | **Free** | **Mind The Gap Plus** | **Mind The Gap Pro** |
-|---|:---:|:---:|:---:|
-| Price | ₹0 | **₹199/mo** (~$2.40) | **₹399/mo** (~$4.80) |
-| Daily analyses | 5 | Unlimited | Unlimited |
-| Reply suggestions | 3 per analysis | 3 per analysis | 3 per analysis |
-| Conversation modes | General only | All 6 modes | All 6 modes |
-| Help Levels | 1–3 | 1–3 | 1–5 (incl. coaching + ghost-write) |
-| Session context | ✅ | ✅ | ✅ |
-| Cross-session history | ❌ | ❌ | ✅ |
-| Local contact profiles | ❌ | ✅ | ✅ |
-| History import (Instagram, WhatsApp) | ❌ | ❌ | ✅ |
-| Second Brain | ❌ | ❌ | ✅ |
-| Encrypted cloud sync | ❌ | ❌ | ✅ |
-
----
-
-## 📊 Market
-
-| Definition | Market Size |
-|---|---|
-| Global mental health app market (2023) | **$6.2B** — growing 16% CAGR through 2030 |
-| AI writing & communication assistant market | **$1.9B** (2023) — Grammarly, Jasper, Copy.ai territory |
-| AI texting & social coaching apps | **Nascent — first-mover window open** |
-
-**Target Segments:**
-- 💘 Young men navigating romantic texting (16–28) — largest segment, highest willingness to pay, strongest word-of-mouth
-- 💬 Young women reading ambiguous social signals — same acute pain, different use pattern
-- 📋 Job seekers managing professional communication — distinct mode, high value per interaction
-- ♾️ Neurodivergent users — smaller but extremely motivated; this is an accessibility tool, not a convenience
-- 🌱 Social anxiety sufferers in active recovery — want skill-building, not dependency
-
-**Why India First:**
-- 500M+ WhatsApp monthly active users (largest globally)
-- ~95% Android market share → notification listener available to virtually everyone
-- Culturally amplified text anxiety (family pressure, relationship stigma)
-- Regulatory flexibility for early-stage iteration
-- Proven path → Southeast Asia → Middle East → West
-
----
-
 ## 🛡️ Privacy by Architecture
 
 Privacy isn't a policy at Mind The Gap. It's a technical fact.
@@ -328,32 +247,9 @@ What NEVER leaves the device:
 
 > The most common privacy enforcement action against consumer apps comes from a journalist running a network inspection tool — and discovering that an app claiming to be private is sending personal data to servers. Mind The Gap's architecture makes that story impossible to write. The data genuinely does not leave the device. That is not a legal disclaimer. It is a technical fact.
 
----
-
-## 🚦 Current Status
-
-```
-Phase 1 — Prototype
-[████████░░░░░░░░░░░░] 40% — In development
-
-Next milestone: Functional Android keyboard with Gemini Flash integration
-Ship date target: 8 weeks
-```
-
-
 
 <div align="center">
 
----
-
-**The bottom line:**
-
-*Mind The Gap is a buildable, defensible, market-validated idea with a specific technical insight at its core that competitors have not executed. The problem is real. The pain is acute. The user is motivated. The existing market demonstrates willingness to pay. The keyboard integration solves the primary UX friction that competitors have failed to eliminate.*
-
-**Stop planning. Start shipping the prototype.**
-
----
-
-*v1.0 — Confidential — 2025*
+*v1.0 — Confidential — 2026*
 
 </div>
