@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MindTheGap" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/neon_yellow</item>
+        <item name="colorSecondary">@color/neon_orange</item>
+        <item name="android:statusBarColor">@color/pitch_black</item>
+        <item name="android:windowBackground">@color/pitch_black</item>
+    </style>
+</resources>
