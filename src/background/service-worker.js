@@ -14,6 +14,10 @@ const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/
 // If this is set to a non-empty string, Subtext will use it directly.
 const HARDCODED_API_KEY = '';
 
+// Shared AI API Backend Configurations (for parallel app store launches)
+const USE_BACKEND_SERVER = true;
+const BACKEND_SERVER_URL = 'http://localhost:3000';
+
 // ---- System Prompt Library ----
 
 const BASE_PROMPT = `You are Mind The Gap, an expert AI psychologist and social communication coach specializing in decoding the subtle, hidden meanings (subtext) behind text messages. You help users understand what a sender actually means, detect subtle relationship shifts, and craft authentic, context-perfect replies that foster high-quality connections.
@@ -525,6 +529,28 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
   if (message.type === 'SUBMIT_RETROSPECTIVE_FEEDBACK') {
     const { analysisId, feedback } = message.payload;
+
+    // Send to central server if enabled
+    if (USE_BACKEND_SERVER) {
+      chrome.storage.local.get(['pastAnalyses'], function(data) {
+        const pastAnalyses = data.pastAnalyses || [];
+        const entry = pastAnalyses.find(e => e.id === analysisId);
+        if (entry) {
+          fetch(`${BACKEND_SERVER_URL}/api/feedback`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              analysisId: entry.id,
+              platform: 'chrome_extension',
+              rating: feedback,
+              message: entry.message,
+              aiAnalysis: entry.analysis
+            })
+          }).catch(err => console.error('Error logging feedback centrally:', err));
+        }
+      });
+    }
+
     chrome.storage.local.get(['pastAnalyses'], function(data) {
       const pastAnalyses = data.pastAnalyses || [];
       const updated = pastAnalyses.map(function(entry) {
@@ -545,27 +571,60 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 async function handleAnalyze(payload) {
-  const settings = await getFromStorage('sync', ['apiKey', 'responseStyle']);
-  const apiKey = settings.apiKey || HARDCODED_API_KEY;
+  if (USE_BACKEND_SERVER) {
+    const url = `${BACKEND_SERVER_URL}/api/analyze`;
+    const body = {
+      message: payload.message,
+      mode: payload.mode || 'general',
+      helpLevel: payload.helpLevel || 3,
+      responseStyle: payload.responseStyle || 'balanced',
+      context: payload.context || [],
+      personDescription: payload.personDescription || ''
+    };
 
-  if (!apiKey) {
-    throw new Error('NO_API_KEY');
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (response.status === 429) {
+      throw new Error('RATE_LIMITED');
+    }
+    if (response.status === 403) {
+      throw new Error('INVALID_API_KEY');
+    }
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error || 'API_ERROR: ' + response.status);
+    }
+
+    const result = await response.json();
+    saveAnalysisToHistory(payload, result);
+    return result;
+  } else {
+    const settings = await getFromStorage('sync', ['apiKey', 'responseStyle']);
+    const apiKey = settings.apiKey || HARDCODED_API_KEY;
+
+    if (!apiKey) {
+      throw new Error('NO_API_KEY');
+    }
+
+    const mode = payload.mode || 'general';
+    const helpLevel = payload.helpLevel || 3;
+    const style = payload.responseStyle || settings.responseStyle || 'balanced';
+
+    const systemPrompt = buildSystemPrompt(mode, helpLevel, style);
+    const userMessage = buildUserMessage(
+      payload.message,
+      payload.context || [],
+      payload.personDescription || ''
+    );
+
+    const result = await callGemini(apiKey, systemPrompt, userMessage);
+    saveAnalysisToHistory(payload, result);
+    return result;
   }
-
-  const mode = payload.mode || 'general';
-  const helpLevel = payload.helpLevel || 3;
-  const style = payload.responseStyle || settings.responseStyle || 'balanced';
-
-  const systemPrompt = buildSystemPrompt(mode, helpLevel, style);
-  const userMessage = buildUserMessage(
-    payload.message,
-    payload.context || [],
-    payload.personDescription || ''
-  );
-
-  const result = await callGemini(apiKey, systemPrompt, userMessage);
-  saveAnalysisToHistory(payload, result);
-  return result;
 }
 
 function saveAnalysisToHistory(payload, result) {
@@ -691,20 +750,47 @@ function buildOpenerSystemPrompt(mode) {
 }
 
 async function handleGenerateOpener(payload) {
-  const settings = await getFromStorage('sync', ['apiKey']);
-  const apiKey = settings.apiKey || HARDCODED_API_KEY;
+  if (USE_BACKEND_SERVER) {
+    const url = `${BACKEND_SERVER_URL}/api/opener`;
+    const body = {
+      context: payload.context || '',
+      mode: payload.mode || 'general'
+    };
 
-  if (!apiKey) {
-    throw new Error('NO_API_KEY');
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (response.status === 429) {
+      throw new Error('RATE_LIMITED');
+    }
+    if (response.status === 403) {
+      throw new Error('INVALID_API_KEY');
+    }
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error || 'API_ERROR: ' + response.status);
+    }
+
+    return await response.json();
+  } else {
+    const settings = await getFromStorage('sync', ['apiKey']);
+    const apiKey = settings.apiKey || HARDCODED_API_KEY;
+
+    if (!apiKey) {
+      throw new Error('NO_API_KEY');
+    }
+
+    const mode = payload.mode || 'general';
+    const context = payload.context || '';
+
+    const systemPrompt = buildOpenerSystemPrompt(mode);
+    const userMessage = `CONTEXT/PROMPT FOR OPENING LINE: "${context}"`;
+
+    return await callGeminiOpener(apiKey, systemPrompt, userMessage);
   }
-
-  const mode = payload.mode || 'general';
-  const context = payload.context || '';
-
-  const systemPrompt = buildOpenerSystemPrompt(mode);
-  const userMessage = `CONTEXT/PROMPT FOR OPENING LINE: "${context}"`;
-
-  return await callGeminiOpener(apiKey, systemPrompt, userMessage);
 }
 
 async function callGeminiOpener(apiKey, systemPrompt, userMessage, retries) {
