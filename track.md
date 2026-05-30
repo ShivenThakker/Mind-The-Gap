@@ -123,6 +123,12 @@
 - [x] Opening One-Liners: Integrated cultural and Hinglish slang rules in `OPENER_BASE_PROMPT` to suggest witty, native, and socially perfect icebreakers.
 - [x] Zero-Client Impact: Leveraged backend API gateway extraction so that mobile apps and Chrome extensions benefit from this upgrade instantly with zero rebuilds or updates.
 
+### Session 12 — 2026-05-30 (Graceful Fallback & Connection Resiliency)
+
+- [x] Extension Resiliency: Implemented elegant `try-catch` network wrappers inside the service worker's `handleAnalyze` and `handleGenerateOpener` routines.
+- [x] On-Device Fallback Routing: If the secure Shared API Backend server is offline, unreachable, or returns a network error, the extension automatically degrades gracefully and routes queries directly to Gemini on-device using the user's settings or hardcoded key.
+- [x] Error-Free Onboarding: Bypasses abrupt "message port closed" exceptions, maintaining a seamless, uninterrupted social decoding user experience even in offline developer modes.
+
 ---
 
 ## What Needs To Be Done Next
@@ -201,6 +207,7 @@
 30. `6a53d47` — docs: document Git history API key purge in track.md
 31. `61b3a0b` — feat(android): build fully functional Jetpack Compose Keyboard and onboarding wizard
 32. `dc0bfd4` — feat(server): add native Hinglish decoding and register-matching reply support
+33. `1772f71` — fix(extension): add robust on-device Gemini API fallback when server is offline
 
 ---
 
