@@ -116,6 +116,13 @@
 - [x] Wizard activity `MainActivity.kt` with step-by-step instructions to enable the keyboard, select it as the active IME, and dynamically test connections.
 - [x] Core service `MindTheGapIME.kt` inheriting `InputMethodService` that registers with the Android OS, captures clipboard text pre-emptively, registers key presses, and executes Retrofit network queries.
 
+### Session 11 — 2026-05-30 (Hinglish & Multi-Language Support)
+
+- [x] Master prompts overhaul: Added deep `HINGLISH & MULTI-LANGUAGE DECODING` instructions into `/server/prompts.js` BASE_PROMPT to seamlessly interpret Romanized Hindi messaging phonetics (e.g., "kya kar rahe ho").
+- [x] Register-matching reply suggestions: Attuned suggested replies to generate organic, register-matched hybrid Hinglish/English options (e.g., "haan chalega", "sahi hai yaar") matching modern Gen Z/Millennial texting registers.
+- [x] Opening One-Liners: Integrated cultural and Hinglish slang rules in `OPENER_BASE_PROMPT` to suggest witty, native, and socially perfect icebreakers.
+- [x] Zero-Client Impact: Leveraged backend API gateway extraction so that mobile apps and Chrome extensions benefit from this upgrade instantly with zero rebuilds or updates.
+
 ---
 
 ## What Needs To Be Done Next
@@ -193,6 +200,7 @@
 29. `dfa84ad` — chore: remove leaked API key from test_gemini.py
 30. `6a53d47` — docs: document Git history API key purge in track.md
 31. `61b3a0b` — feat(android): build fully functional Jetpack Compose Keyboard and onboarding wizard
+32. `dc0bfd4` — feat(server): add native Hinglish decoding and register-matching reply support
 
 ---
 
