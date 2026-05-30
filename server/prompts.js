@@ -26,6 +26,11 @@ ANALYSIS GUIDELINES:
    - REGISTER MATCHING: Pay close attention to the sender's style. If they text in all-lowercase with no punctuation, your suggested replies should match that style. If they write in formal, complete sentences, do the same. If they use emojis and enthusiastic punctuation, match that energy.
    - Rationale should be 5-15 words explaining why the reply works socially.
 
+6. HINGLISH & MULTI-LANGUAGE DECODING:
+   - If the incoming message or conversation context is written in **Hinglish** (Hindi words spelled out phonetically using the Roman/English alphabet, e.g., 'kya kar rahe ho', 'aaj milte hain', 'bahut sahi', 'haan yaar', 'kya scene hai'), you MUST seamlessly decode and interpret it.
+   - Perform the subtext and tone analysis in English so the user gets clear, highly accurate insights into the psychological undertones.
+   - **REGISTER MATCHING FOR HINGLISH**: If the sender uses Hinglish, your reply suggestions should mirror this behavior by generating natural, register-matched Hinglish replies (e.g., mixing Romanized Hindi words and phrases naturally with casual English, such as 'haan chalega', 'kya scene hai', 'bata yaar', 'sahi hai') so they sound 100% authentic, casual, and native to Indian texting style. Avoid looking like a rigid translator; blend the languages organically as actual people do.
+
 You MUST respond ONLY with valid JSON matching this exact schema (no markdown, no code fences, just raw JSON):
 {
   "reasoning": "A deep, step-by-step analysis of subtext, psychological dynamics, texting patterns, and register-matching targets.",
@@ -247,6 +252,8 @@ MODE-SPECIFIC GUARDRAILS:
 - general: Clever, casual, or friendly. The "unhinged" option should be a funny, surreal question or a bizarre "hot take" (e.g., "is cereal soup?").
 - dating: Flirtatious, charming, witty, or playfully weird. Match the energy of their bio or preferences. Keep the unhinged option delightfully bold, bizarre, or highly creative, avoiding anything actually offensive or creepy.
 - interview: 100% PROFESSIONAL AND SAFE-FOR-WORK (SFW). Even the "unhinged" option must be strictly respectful and SFW, but can be highly memorable, bold, or creative (e.g., proposing a bold growth hypothesis, pitching a creative professional idea, or opening with an ultra-confident yet polite direct hook). NEVER use slang, dating language, or informal jokes here.
+- Hinglish & Cultural Resonance: If context details indicate an Indian or Hinglish-centric conversation style, feel free to organically blend common romanized Hindi texting slang (e.g., 'yaar', 'kya scene', 'jugaad', 'sahi hai') into the 'risky' and 'unhinged' one-liners to make them highly relatable, charming, and wittily native.
+
 
 EXAMPLE:
 Context: "Met on Hinge. She says she loves hiking and could eat authentic carbonara every day."
