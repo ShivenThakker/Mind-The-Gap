@@ -505,6 +505,43 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
       });
     return true; // Keep message channel open for async
   }
+
+  if (message.type === 'GET_PENDING_RETROSPECTIVE') {
+    chrome.storage.local.get(['pastAnalyses'], function(data) {
+      const pastAnalyses = data.pastAnalyses || [];
+      const now = Date.now();
+      // For demo: prompt for any analysis created at least 30 seconds ago with no feedback
+      // In production, this would be 24 hours (24 * 60 * 60 * 1000)
+      const RETROSPECTIVE_DELAY = 30 * 1000; 
+      
+      const pending = pastAnalyses.find(function(entry) {
+        return entry.feedback === null && (now - entry.timestamp) >= RETROSPECTIVE_DELAY;
+      });
+      
+      sendResponse({ type: 'PENDING_RETROSPECTIVE_RESULT', payload: pending || null });
+    });
+    return true; // Keep message channel open for async
+  }
+
+  if (message.type === 'SUBMIT_RETROSPECTIVE_FEEDBACK') {
+    const { analysisId, feedback } = message.payload;
+    chrome.storage.local.get(['pastAnalyses'], function(data) {
+      const pastAnalyses = data.pastAnalyses || [];
+      const updated = pastAnalyses.map(function(entry) {
+        if (entry.id === analysisId) {
+          return Object.assign({}, entry, {
+            feedback: feedback,
+            feedbackTimestamp: Date.now()
+          });
+        }
+        return entry;
+      });
+      chrome.storage.local.set({ pastAnalyses: updated }, function() {
+        sendResponse({ type: 'FEEDBACK_SUBMITTED_SUCCESS' });
+      });
+    });
+    return true;
+  }
 });
 
 async function handleAnalyze(payload) {
@@ -526,7 +563,33 @@ async function handleAnalyze(payload) {
     payload.personDescription || ''
   );
 
-  return await callGemini(apiKey, systemPrompt, userMessage);
+  const result = await callGemini(apiKey, systemPrompt, userMessage);
+  saveAnalysisToHistory(payload, result);
+  return result;
+}
+
+function saveAnalysisToHistory(payload, result) {
+  chrome.storage.local.get(['pastAnalyses'], function(data) {
+    const pastAnalyses = data.pastAnalyses || [];
+    const entry = {
+      id: 'analysis_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+      timestamp: Date.now(),
+      message: payload.message,
+      context: payload.context || [],
+      personDescription: payload.personDescription || '',
+      mode: payload.mode || 'general',
+      helpLevel: payload.helpLevel || 3,
+      analysis: result,
+      feedback: null,
+      feedbackTimestamp: null
+    };
+    pastAnalyses.push(entry);
+    // Keep max 50 analyses to remain within storage bounds
+    if (pastAnalyses.length > 50) {
+      pastAnalyses.shift();
+    }
+    chrome.storage.local.set({ pastAnalyses: pastAnalyses });
+  });
 }
 
 function saveFeedback(payload) {

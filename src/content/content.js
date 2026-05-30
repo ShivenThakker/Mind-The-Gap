@@ -385,6 +385,8 @@
     bubble.classList.add('st-bubble--hidden');
     // Focus textarea
     setTimeout(() => refs.textarea.focus(), 350);
+    // Check for pending retrospective feedback
+    checkRetrospectiveFeedback();
   }
 
   function closePanel() {
@@ -1016,6 +1018,89 @@
     refs.resultsArea.querySelector('#st-open-settings')?.addEventListener('click', () => {
       chrome.runtime.openOptionsPage?.();
     });
+  }
+
+  // ---- Retrospective Feedback ----
+  function checkRetrospectiveFeedback() {
+    if (!isContextValid()) return;
+    
+    // Avoid showing duplicates if already visible
+    if (panel.querySelector('.st-retro-card')) return;
+    
+    safeSendMessage({ type: 'GET_PENDING_RETROSPECTIVE' }, (response) => {
+      if (response && response.payload) {
+        renderRetrospectivePrompt(response.payload);
+      }
+    });
+  }
+
+  function renderRetrospectivePrompt(entry) {
+    const bodyEl = panel.querySelector('.st-panel__body');
+    if (!bodyEl) return;
+
+    const card = document.createElement('div');
+    card.className = 'st-retro-card';
+    card.innerHTML = `
+      <div class="st-retro-card__header">
+        <span class="st-retro-card__title">💡 Hindsight Accuracy Check</span>
+        <button class="st-retro-card__close" aria-label="Dismiss feedback">✕</button>
+      </div>
+      <div class="st-retro-card__body">
+        <div class="st-retro-card__desc">Looking back, was our subtext analysis of this message accurate?</div>
+        <div class="st-retro-card__msg">"${escapeHtml(entry.message)}"</div>
+        <div class="st-retro-card__buttons">
+          <button class="st-retro-card__btn st-retro-card__btn--accurate" data-val="accurate">✅ Yes</button>
+          <button class="st-retro-card__btn st-retro-card__btn--partial" data-val="partial">⚠️ Partly</button>
+          <button class="st-retro-card__btn st-retro-card__btn--wrong" data-val="wrong">❌ No</button>
+        </div>
+      </div>
+    `;
+
+    // Prepend as the first child of the body
+    bodyEl.insertBefore(card, bodyEl.firstChild);
+
+    // Event listeners
+    const closeBtn = card.querySelector('.st-retro-card__close');
+    closeBtn.addEventListener('click', () => {
+      dismissRetroCard(card, entry.id, 'dismissed');
+    });
+
+    const buttons = card.querySelectorAll('.st-retro-card__btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.dataset.val;
+        submitRetrospectiveFeedback(entry.id, val, card);
+      });
+    });
+  }
+
+  function submitRetrospectiveFeedback(analysisId, val, cardEl) {
+    if (!isContextValid()) {
+      handleContextInvalidated();
+      return;
+    }
+    
+    safeSendMessage({
+      type: 'SUBMIT_RETROSPECTIVE_FEEDBACK',
+      payload: { analysisId, feedback: val }
+    }, (response) => {
+      showToast('Thank you for your feedback! 🙏', 'success');
+      dismissRetroCard(cardEl, analysisId, val);
+    });
+  }
+
+  function dismissRetroCard(cardEl, analysisId, rating) {
+    if (rating === 'dismissed') {
+      safeSendMessage({
+        type: 'SUBMIT_RETROSPECTIVE_FEEDBACK',
+        payload: { analysisId, feedback: 'dismissed' }
+      });
+    }
+    
+    cardEl.classList.add('st-retro-card--slide-out');
+    setTimeout(() => {
+      cardEl.remove();
+    }, 400);
   }
 
   // ---- Toast Notifications ----

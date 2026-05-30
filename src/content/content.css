@@ -1352,3 +1352,124 @@
 .st-opener-card:nth-child(2) { animation-delay: 150ms; }
 .st-opener-card:nth-child(3) { animation-delay: 250ms; }
 
+/* ---- Retrospective Feedback Card ---- */
+.st-retro-card {
+  background: linear-gradient(135deg, hsla(0, 0%, 9%, 0.95), hsla(0, 0%, 14%, 0.95));
+  border: 1px solid var(--st-border-accent);
+  border-radius: var(--st-radius-lg);
+  padding: 14px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 12px var(--st-accent-glow);
+  animation: slideUp var(--st-transition-default) both;
+  transition: transform var(--st-transition-default), opacity var(--st-transition-default);
+  margin-bottom: 4px;
+}
+
+.st-retro-card--slide-out {
+  transform: translateY(-20px) scale(0.95);
+  opacity: 0;
+}
+
+.st-retro-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.st-retro-card__title {
+  font-family: var(--st-font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--st-accent);
+  letter-spacing: 0.2px;
+}
+
+.st-retro-card__close {
+  background: transparent;
+  border: none;
+  color: var(--st-text-tertiary);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color var(--st-transition-fast), background var(--st-transition-fast);
+}
+
+.st-retro-card__close:hover {
+  color: var(--st-text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.st-retro-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.st-retro-card__desc {
+  font-size: 12.5px;
+  color: var(--st-text-secondary);
+  line-height: 1.4;
+}
+
+.st-retro-card__msg {
+  font-family: var(--st-font-mono);
+  font-size: 11.5px;
+  color: var(--st-text-tertiary);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 6px 10px;
+  border-radius: var(--st-radius-sm);
+  border-left: 2px solid var(--st-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 4px 0;
+}
+
+.st-retro-card__buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.st-retro-card__btn {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid var(--st-border);
+  border-radius: var(--st-radius-sm);
+  font-family: var(--st-font-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--st-bg-tertiary);
+  color: var(--st-text-secondary);
+  transition: all var(--st-transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.st-retro-card__btn:hover {
+  color: #000000;
+  border-color: transparent;
+}
+
+.st-retro-card__btn--accurate:hover {
+  background: var(--st-success);
+  box-shadow: 0 0 10px hsla(152, 68%, 50%, 0.35);
+}
+
+.st-retro-card__btn--partial:hover {
+  background: var(--st-warning);
+  box-shadow: 0 0 10px hsla(38, 92%, 60%, 0.35);
+}
+
+.st-retro-card__btn--wrong:hover {
+  background: var(--st-error);
+  box-shadow: 0 0 10px hsla(0, 72%, 60%, 0.35);
+}
+
