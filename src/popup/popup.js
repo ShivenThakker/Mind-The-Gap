@@ -25,13 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ---- Check API Key Status via Background Script ----
   chrome.runtime.sendMessage({ type: 'CHECK_API_KEY' }, (response) => {
     const hasKey = response && response.payload && response.payload.hasKey;
+    const isHardcoded = response && response.payload && response.payload.isHardcoded;
     if (hasKey) {
       apiStatus.innerHTML = `
         <span class="popup__status-dot popup__status-dot--ok"></span>
-        <span class="popup__status-text">API key configured</span>
+        <span class="popup__status-text">${isHardcoded ? 'Connected to AI Server' : 'API key configured'}</span>
       `;
     } else {
       apiStatus.innerHTML = `

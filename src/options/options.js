@@ -19,11 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
       apiKeyInput.value = settings.apiKey;
       showStatus(keyStatus, '✓ API key is saved', 'success');
     } else {
-      // Check if background has a hardcoded key
+      // Check if background is connected to server or hardcoded key
       chrome.runtime.sendMessage({ type: 'CHECK_API_KEY' }, (response) => {
         if (response && response.payload && response.payload.isHardcoded) {
-          apiKeyInput.placeholder = 'Using hardcoded API key (from background)';
-          showStatus(keyStatus, '✓ Using hardcoded API key for demo', 'success');
+          apiKeyInput.placeholder = 'Using Shared AI Server backend (Key Secured)';
+          showStatus(keyStatus, '✓ Connected to secure Shared AI Server backend', 'success');
         }
       });
     }
