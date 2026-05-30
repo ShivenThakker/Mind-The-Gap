@@ -7,7 +7,7 @@
 
 ---
 
-## Status: 🟢 UX Spacing refined, invalid API key error handling polished, and One-Liner Generator fully integrated.
+## Status: 🟢 Model upgraded to Gemini 2.5 Flash with native thinking, overhauled base prompts, and deep conversational few-shot examples for extremely accurate social subtext analysis.
 
 ---
 
@@ -93,6 +93,16 @@
 - [x] Removed the leaked/deactivated free-tier API key from `test_gemini.py` to eliminate security warnings.
 - [x] Rewrote Git history using `git filter-branch` to completely purge the leaked API key from all historical commits, keeping past commits completely clean of credentials.
 
+### Session 9 — 2026-05-30 (Accuracy Overhaul)
+
+- [x] Upgraded the AI model to `gemini-2.5-flash` for advanced subtext analysis capabilities.
+- [x] Enabled the "thinking budget" configuration in Gemini API requests to leverage the model's native reasoning abilities.
+- [x] Redesigned and overhauled the core system prompt (`BASE_PROMPT`) to include detailed step-by-step reasoning instructions, pattern-shift checks, and texting register-matching.
+- [x] Integrated a root-level `reasoning` field in the JSON schema to enforce analytical thinking before output generation.
+- [x] Rebuilt `validateAndNormalize` in the background service worker to capture, parse, and structure the reasoning field safely.
+- [x] Overhauled `MODE_PROMPTS` to include detailed, concrete few-shot examples for general, dating, and professional (interview) modes.
+- [x] Enhanced `OPENER_BASE_PROMPT` (One-Liner Generator) with a gold-standard few-shot example and clear risk-level rules for highly tailored, creative, and SFW outputs.
+
 ---
 
 ## What Needs To Be Done Next
@@ -141,26 +151,34 @@
 
 1. `55c851d` — feat: initial Chrome Extension scaffold
 2. `e96b574` — fix: font loading in Shadow DOM
-3. `8ab5d5e` — feat: restrict scope to messaging sites & add hardcoded API key fallback support
-4. `5216604` — docs: add comprehensive README.md and update progress tracker
-5. `60d256a` — fix: use correct Gemini 1.5 Flash model identifier and improve error propagation
-6. `4de19c5` — style: shift to premium neon yellow & orange on pitch black
-7. `8dea6af` — fix: append cache-buster to content.css URL
-8. `27a8e40` — feat: rename application to Mind The Gap
-9. `42de6e0` — style: integrate new neon yellow & orange speech bubble logo
-10. `3e07bf0` — fix: handle extension context invalidation gracefully on reload
-11. `a283bcc` — fix: harden context invalidation check via try-catch getManifest
-12. `2992784` — perf: switch to Gemini Flash-Lite & optimize prompt for 3x speedup
-13. `0a93150` — fix: default to General mode; enlarge Settings button and footer text
-14. `fc89f14` — fix: force white text on Settings button in popup
-15. `2ab457b` — style: update app logo and extension icons
-16. `13c790d` — chore: add Gemini API diagnostic test script
-17. `4780856` — fix: hide bubble when panel open; white text on Settings button
-18. `f91e0e0` — chore: add track.md and subtext.md to .gitignore and stop tracking them
-19. `3a6f3b3` — feat: add multi-mode Opening Line Generator with dynamic risk levels
-20. `572daef` — docs: update track.md with session 7 progress
-21. `70dfcbf` — fix: correct spacing overlaps and polish invalid api key error handling
-22. `42f772d` — chore: remove leaked API key from test_gemini.py
+3. `fb4ff75` — docs: update track.md with session 1 progress and install instructions
+4. `8ab5d5e` — feat: restrict scope to messaging sites & add hardcoded API key fallback support
+5. `5216604` — docs: add comprehensive README.md and update progress tracker
+6. `60d256a` — fix: use correct Gemini 1.5 Flash model identifier and improve error propagation
+7. `4de19c5` — style: shift to premium neon yellow & orange on pitch black
+8. `8dea6af` — fix: append cache-buster to content.css URL
+9. `27a8e40` — feat: rename application to Mind The Gap
+10. `42de6e0` — style: integrate new neon yellow & orange speech bubble logo
+11. `3e07bf0` — fix: handle extension context invalidation gracefully on reload
+12. `a283bcc` — fix: harden context invalidation check via try-catch getManifest
+13. `2992784` — perf: switch to Gemini Flash-Lite & optimize prompt for 3x speedup
+14. `0a93150` — fix: default to General mode; enlarge Settings button and footer text
+15. `fc89f14` — fix: force white text on Settings button in popup
+16. `2ab457b` — style: update app logo and extension icons
+17. `824eb6f` — chore: add Gemini API diagnostic test script
+18. `2ef71a3` — fix: hide bubble when panel open; white text on Settings button
+19. `21357ab` — docs: update track.md with sessions 5 & 6 progress
+20. `325aa41` — docs: rebrand README.md to Mind The Gap and update styling details
+21. `bfd7ead` — chore: add track.md and subtext.md to .gitignore and stop tracking them
+22. `92b6486` — Revise README.md for Subtext application details
+23. `a0be890` — Rename Subtext to Mind The Gap in README
+24. `8830a3f` — Update milestone and ship date in README
+25. `8d0e6e4` — feat: add multi-mode Opening Line Generator with dynamic risk levels
+26. `0f4a190` — docs: update track.md with session 7 progress
+27. `35c27e0` — fix: correct spacing overlaps and polish invalid api key error handling
+28. `6e97af0` — Merge branch 'main' of github.com:ShivenThakker/Mind-The-Gap
+29. `dfa84ad` — chore: remove leaked API key from test_gemini.py
+30. `6a53d47` — docs: document Git history API key purge in track.md
 
 ---
 
@@ -174,13 +192,3 @@
    - Get one at https://aistudio.google.com/apikey (free, 30 seconds)
 6. Open WhatsApp Web or another supported site → click the bubble → paste a message → click Analyze
 
-
-## How to Install & Test
-
-1. Open Chrome and go to `chrome://extensions`
-2. Enable **Developer mode** (toggle in top-right)
-3. Click **Load unpacked** and select the `Mind-The-Gap` folder
-4. The Mind The Gap bubble should appear on supported messaging sites (WhatsApp Web, Telegram Web, Instagram, Messenger, Slack, Discord)
-5. Click the extension icon in the toolbar → Settings → paste your **free** Gemini API key (optional if a hardcoded API key is configured in the background script)
-   - Get one at https://aistudio.google.com/apikey (free, 30 seconds)
-6. Open WhatsApp Web or another supported site → click the bubble → paste a message → click Analyze
