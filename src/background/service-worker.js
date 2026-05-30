@@ -572,59 +572,71 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
 async function handleAnalyze(payload) {
   if (USE_BACKEND_SERVER) {
-    const url = `${BACKEND_SERVER_URL}/api/analyze`;
-    const body = {
-      message: payload.message,
-      mode: payload.mode || 'general',
-      helpLevel: payload.helpLevel || 3,
-      responseStyle: payload.responseStyle || 'balanced',
-      context: payload.context || [],
-      personDescription: payload.personDescription || ''
-    };
+    try {
+      const url = `${BACKEND_SERVER_URL}/api/analyze`;
+      const body = {
+        message: payload.message,
+        mode: payload.mode || 'general',
+        helpLevel: payload.helpLevel || 3,
+        responseStyle: payload.responseStyle || 'balanced',
+        context: payload.context || [],
+        personDescription: payload.personDescription || ''
+      };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
 
-    if (response.status === 429) {
-      throw new Error('RATE_LIMITED');
-    }
-    if (response.status === 403) {
-      throw new Error('INVALID_API_KEY');
-    }
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error || 'API_ERROR: ' + response.status);
-    }
+      if (response.status === 429) {
+        throw new Error('RATE_LIMITED');
+      }
+      if (response.status === 403) {
+        throw new Error('INVALID_API_KEY');
+      }
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || 'API_ERROR: ' + response.status);
+      }
 
-    const result = await response.json();
-    saveAnalysisToHistory(payload, result);
-    return result;
+      const result = await response.json();
+      saveAnalysisToHistory(payload, result);
+      return result;
+    } catch (error) {
+      console.warn('Backend server failed or offline, falling back to direct API calling:', error);
+      if (error.message === 'INVALID_API_KEY' || error.message === 'RATE_LIMITED' || error.message === 'NO_API_KEY') {
+        throw error;
+      }
+      return await callDirectGemini(payload);
+    }
   } else {
-    const settings = await getFromStorage('sync', ['apiKey', 'responseStyle']);
-    const apiKey = settings.apiKey || HARDCODED_API_KEY;
-
-    if (!apiKey) {
-      throw new Error('NO_API_KEY');
-    }
-
-    const mode = payload.mode || 'general';
-    const helpLevel = payload.helpLevel || 3;
-    const style = payload.responseStyle || settings.responseStyle || 'balanced';
-
-    const systemPrompt = buildSystemPrompt(mode, helpLevel, style);
-    const userMessage = buildUserMessage(
-      payload.message,
-      payload.context || [],
-      payload.personDescription || ''
-    );
-
-    const result = await callGemini(apiKey, systemPrompt, userMessage);
-    saveAnalysisToHistory(payload, result);
-    return result;
+    return await callDirectGemini(payload);
   }
+}
+
+async function callDirectGemini(payload) {
+  const settings = await getFromStorage('sync', ['apiKey', 'responseStyle']);
+  const apiKey = settings.apiKey || HARDCODED_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('NO_API_KEY');
+  }
+
+  const mode = payload.mode || 'general';
+  const helpLevel = payload.helpLevel || 3;
+  const style = payload.responseStyle || settings.responseStyle || 'balanced';
+
+  const systemPrompt = buildSystemPrompt(mode, helpLevel, style);
+  const userMessage = buildUserMessage(
+    payload.message,
+    payload.context || [],
+    payload.personDescription || ''
+  );
+
+  const result = await callGemini(apiKey, systemPrompt, userMessage);
+  saveAnalysisToHistory(payload, result);
+  return result;
 }
 
 function saveAnalysisToHistory(payload, result) {
@@ -751,46 +763,58 @@ function buildOpenerSystemPrompt(mode) {
 
 async function handleGenerateOpener(payload) {
   if (USE_BACKEND_SERVER) {
-    const url = `${BACKEND_SERVER_URL}/api/opener`;
-    const body = {
-      context: payload.context || '',
-      mode: payload.mode || 'general'
-    };
+    try {
+      const url = `${BACKEND_SERVER_URL}/api/opener`;
+      const body = {
+        context: payload.context || '',
+        mode: payload.mode || 'general'
+      };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
 
-    if (response.status === 429) {
-      throw new Error('RATE_LIMITED');
-    }
-    if (response.status === 403) {
-      throw new Error('INVALID_API_KEY');
-    }
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData.error || 'API_ERROR: ' + response.status);
-    }
+      if (response.status === 429) {
+        throw new Error('RATE_LIMITED');
+      }
+      if (response.status === 403) {
+        throw new Error('INVALID_API_KEY');
+      }
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || 'API_ERROR: ' + response.status);
+      }
 
-    return await response.json();
+      return await response.json();
+    } catch (error) {
+      console.warn('Backend server failed or offline, falling back to direct API calling:', error);
+      if (error.message === 'INVALID_API_KEY' || error.message === 'RATE_LIMITED' || error.message === 'NO_API_KEY') {
+        throw error;
+      }
+      return await callDirectOpener(payload);
+    }
   } else {
-    const settings = await getFromStorage('sync', ['apiKey']);
-    const apiKey = settings.apiKey || HARDCODED_API_KEY;
-
-    if (!apiKey) {
-      throw new Error('NO_API_KEY');
-    }
-
-    const mode = payload.mode || 'general';
-    const context = payload.context || '';
-
-    const systemPrompt = buildOpenerSystemPrompt(mode);
-    const userMessage = `CONTEXT/PROMPT FOR OPENING LINE: "${context}"`;
-
-    return await callGeminiOpener(apiKey, systemPrompt, userMessage);
+    return await callDirectOpener(payload);
   }
+}
+
+async function callDirectOpener(payload) {
+  const settings = await getFromStorage('sync', ['apiKey']);
+  const apiKey = settings.apiKey || HARDCODED_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('NO_API_KEY');
+  }
+
+  const mode = payload.mode || 'general';
+  const context = payload.context || '';
+
+  const systemPrompt = buildOpenerSystemPrompt(mode);
+  const userMessage = `CONTEXT/PROMPT FOR OPENING LINE: "${context}"`;
+
+  return await callGeminiOpener(apiKey, systemPrompt, userMessage);
 }
 
 async function callGeminiOpener(apiKey, systemPrompt, userMessage, retries) {
